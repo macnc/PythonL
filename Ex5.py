@@ -1,5 +1,6 @@
 #!/usr/bin/
 # _*_coding: utf-8
+import os,sys
 
 my_name = "suntao"
 my_hight = 1.85
