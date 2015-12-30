@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c50df9ce-ca5d-4071-b157-f31682ff02de" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/LPTHW/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex1.py" afterPath="$PROJECT_DIR$/LPTHW/Ex1.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex10.py" afterPath="$PROJECT_DIR$/LPTHW/Ex10.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex11.py" afterPath="$PROJECT_DIR$/LPTHW/Ex11.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex12.py" afterPath="$PROJECT_DIR$/LPTHW/Ex12.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex13.py" afterPath="$PROJECT_DIR$/LPTHW/Ex13.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex14.py" afterPath="$PROJECT_DIR$/LPTHW/Ex14.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex15/Ex15.py" afterPath="$PROJECT_DIR$/LPTHW/Ex15/Ex15.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex15/__init__.py" afterPath="$PROJECT_DIR$/LPTHW/Ex16/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex15/ex15_sample.txt" afterPath="$PROJECT_DIR$/LPTHW/Ex15/ex15_sample.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex16/Ex16.py" afterPath="$PROJECT_DIR$/LPTHW/Ex16/Ex16.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex16/__init__.py" afterPath="$PROJECT_DIR$/LPTHW/Ex15/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex16/test.txt" afterPath="$PROJECT_DIR$/LPTHW/Ex16/test.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex2.py" afterPath="$PROJECT_DIR$/LPTHW/Ex2.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex3.py" afterPath="$PROJECT_DIR$/LPTHW/Ex3.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex4.py" afterPath="$PROJECT_DIR$/LPTHW/Ex4.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex5.py" afterPath="$PROJECT_DIR$/LPTHW/Ex5.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex6.py" afterPath="$PROJECT_DIR$/LPTHW/Ex6.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex7.py" afterPath="$PROJECT_DIR$/LPTHW/Ex7.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex8.py" afterPath="$PROJECT_DIR$/LPTHW/Ex8.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Ex9.py" afterPath="$PROJECT_DIR$/LPTHW/Ex9.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="c50df9ce-ca5d-4071-b157-f31682ff02de" name="Default" comment="" />
     <ignored path="PythonL.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -141,8 +118,8 @@
       <file leaf-file-name="Ex9.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LPTHW/Ex9.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.33432835">
+              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -530,9 +507,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="14" y="37" width="1713" height="1123" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23159784" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18132855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -703,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LPTHW/Ex9.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33432835">
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
           <folding />
         </state>
       </provider>
