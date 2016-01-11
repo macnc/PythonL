@@ -4,8 +4,10 @@
 # 这个Package不需要引用, 如果引用的包没有起作用,在IDE中他就是灰色的,代表了没有起作用
 # import sys, os
 
+
 print "lets practice everything."
 print "You \'d need to know \'bout escape with \\ that do \n newlines and \t tabs."
+
 
 poem = """
 \tThe lovely world

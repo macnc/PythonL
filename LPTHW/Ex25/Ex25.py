@@ -80,6 +80,18 @@ def help(ex25):
     \t2. The function will return a list variable data to the command who called.
     \t3. Notice: The data type of parameter \'argv\' should be a String type.
 
+    print_first_and_last(argv):
+    \t1. The function is used for print out the first and last last word from which you have inputted in.
+    \t2. The parameter of it should be String data type.
+
+    print_first_and_last_sorted(argv)
+    \t1. The function should split all of the words in the sentence you've typed in first, after that sort them all as the
+         first character, then put them all in a list data type. The function will pint out the first and the last word
+         from the list.
+    \t2. Notice: The parameter \'argv\' should be String data type.
     """
     if ex25 is not None:
         print help
+
+# I don't know how to implement this with current range of knowledge.
+# def help(ex25.break_words):
