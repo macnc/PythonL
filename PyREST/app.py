@@ -1,8 +1,8 @@
-#!/flask/bin/python
+#!~/anaconda2/bin/python
 # _*_coding: utf-8
 
 from flask import Flask, jsonify, make_response, abort, request, url_for
-
+from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
