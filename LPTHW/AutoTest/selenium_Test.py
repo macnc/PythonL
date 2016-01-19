@@ -4,14 +4,14 @@
 from selenium import webdriver
 import time
 
-dr = webdriver.Safari()
+# dr = webdriver.Safari()
 # dr = webdriver.Firefox()
-# dr = webdriver.Chrome('/Library/Selenium/chromedriver')
+dr = webdriver.Chrome('/Library/Selenium/chromedriver')
 
 # Opera浏览器还是没有调通
 # dr = webdriver.Opera()
 dr.maximize_window()
-dr.get('http://www.google.com/')
+dr.get('http://www.bing.com/')
 time.sleep(5)
 
 search_box = dr.find_element_by_name('q')

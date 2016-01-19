@@ -1,8 +1,10 @@
 #!/flask/bin/python
 # _*_coding: utf-8
 
-from flask import Flask, jsonify, make_response, abort, request
+from flask import Flask, jsonify, make_response, abort, request, url_for
 
+
+auth = HTTPBasicAuth()
 app = Flask(__name__)
 
 tasks = [
@@ -21,10 +23,23 @@ tasks = [
 
 ]
 
+'''目前 API 的设计的问题就是迫使客户端在任务标识返回后去构造 URIs。这对于服务器是十分简单的，但是间接地迫使客户端知道这些 URIs 是如何构造的，
+这将会阻碍我们以后变更这些 URIs。不直接返回任务的 ids，我们直接返回控制这些任务的完整的 URI，以便客户端可以随时使用这些 URIs。
+为此，我们可以写一个小的辅助函数生成一个 “公共” 版本任务发送到客户端:'''
+def make_public_task(task):
+    new_task = {}
+    for field in task:
+        if field == 'id':
+            new_task['uri'] = url_for('get_task', task_id=task['id'], _external=True)
+        else:
+            new_task[field] = task[field]
+    return new_task
+
 # Tasks RESTful API 实现第一版本
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@auth.login_required
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    return jsonify({'tasks': map(make_public_task, tasks)})
 
 # Task RESTful API 第二个版本
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
@@ -82,5 +97,16 @@ def delete_task(task_id):
     tasks.remove(task[0])
     return jsonify({'result': True})
 
+@auth.get_password
+def get_password(username):
+    if username == 'miguel':
+        return 'python'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
+# 主函数入口
 if __name__ == '__main__':
     app.run(debug=True)

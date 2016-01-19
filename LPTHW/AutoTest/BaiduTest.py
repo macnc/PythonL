@@ -12,7 +12,7 @@ import unittest,time,re
 class Baidu(unittest.TestCase):
     #setUp 用于设置初始化的部分，在测试用例执行前，这个方法中的函数将先被调用。这里将浏览器的调用和URL的访问放到初始化部分。#
     def setUp(self):
-        self.driver=webdriver.Firefox()
+        self.driver=webdriver.Safari()
         self.driver.implicitly_wait(30)
         self.base_url='http://www.baidu.com/'
         self.verificationErrors=[]  #脚本运行时，错误的信息将被打印到这个列表中#
