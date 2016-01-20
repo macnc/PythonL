@@ -5,7 +5,14 @@ from flask import Flask, jsonify, make_response, abort, request, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import fields, marshal, Resource, reqparse, Api
 from passlib.apps import custom_app_context as pwd_context
-import sqlalchemy as db
+import MySQLdb as db
+
+# db_host = 'localhost'
+# db_user = 'root'
+# db_pass = 'LoveDesign**!'
+# db_name = 'Flask_RESTful'
+#
+# con = db.connect(host = db_host, user = db_user, password = db_pass, db = db_name)
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
