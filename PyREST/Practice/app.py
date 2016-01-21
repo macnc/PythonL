@@ -11,7 +11,6 @@ import MySQLdb as db
 # db_user = 'root'
 # db_pass = 'LoveDesign**!'
 # db_name = 'Flask_RESTful'
-#
 # con = db.connect(host = db_host, user = db_user, password = db_pass, db = db_name)
 
 auth = HTTPBasicAuth()
