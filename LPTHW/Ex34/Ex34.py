@@ -11,7 +11,7 @@ import os
 animals = ['bear', 'tiger', 'penguin', 'zebra']
 
 def what_animals(index):
-    if index <= len(animals):
+    if index in range(0, len(animals)):
         print 'Your answer is: ' + animals[index]
     else:
         print 'There are no animals like this here!'
