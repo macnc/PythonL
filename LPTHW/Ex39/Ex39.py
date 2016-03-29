@@ -24,17 +24,17 @@ Cities['NY'] = 'New York'
 Cities['OR'] = 'Portland'
 
 # Print out some cities
-print '_' * 10
+print '_' * 50
 print 'NY state has:', Cities['NY']
 print 'OR state has:', Cities['OR']
 
 # Print out some states
-print '_' * 10
+print '_' * 50
 print 'Michigen \'s abbreviation is: ', states['Michigan']
 print 'Florida \'s abbreviation is: ', states['Floria']
 
 #do it by using the state then city dict
-print '_' * 10
+print '_' * 50
 for state, abbrev in states.items():
     print '%s is abbreviated %s' % (state, abbrev)
 
@@ -46,7 +46,7 @@ for abbrev, city in Cities.items():
 for state, abbrev in states.items():
     print '%s state is abbreviated %s and has city %s' % (state, abbrev, Cities[abbrev])
 
-print '_' * 10
+print '_' * 50
 # Safely get abbreviation by state that might not be there
 state = states.get('Texas')
 
