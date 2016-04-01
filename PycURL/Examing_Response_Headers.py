@@ -60,7 +60,7 @@ if encoding is None:
 	# Default encoding for HTML is iso-8859-1.
 	# Other content types may have different default encoding,
 	# or in case of binary data, may have no encoding at all.
-	encoding = 'ios-8859-1'
+	encoding = 'iso-8859-1'
 	print 'Assuming encoding is %s' % encoding
 
 body = buffer.getvalue()
