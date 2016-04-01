@@ -22,8 +22,11 @@ hashmap.set(cities, 'NY', 'Some Town')
 hashmap.set(cities, 'OR', 'Portland')
 
 # Print out some cities
-print "Let me play with hash key, print it out:", hashmap.hash_key(cities, 'CA')
-print "This is a hashmap object: ", cities
+print '_' * 60
+print "Let me play with hash key, print it out for cities:", hashmap.hash_key(cities, 'CA')
+print '_' * 60
+
+print "This is 'cities' hashmap object: ", cities
 print "This is Bucket", cities[hashmap.hash_key(states, 'CA')]
 print "This is we get slot:", hashmap.get_slot(cities, 'MI')
 print

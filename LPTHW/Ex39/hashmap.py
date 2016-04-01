@@ -4,7 +4,7 @@
 import os
 import sys
 
-def new(num_buckets=100):
+def new(num_buckets=30):
     """Initializes a Map with the given number of buckets."""
     aMap = []
     for i in range(0, num_buckets):
