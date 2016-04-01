@@ -1,6 +1,8 @@
 #! /usr/bin/python
 # _*_coding: utf-8
 
+# Examing_Response_Headers python code
+
 import pycurl
 import re
 try:
