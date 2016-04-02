@@ -10,15 +10,15 @@ WORDS = []
 
 PHRASES = {
     "class %%%(%%%):":
-    "Make a class named %%% that is-a %%%.",
+      "Make a class named %%% that is-a %%%.",
     "class %%%(object):\n\tdef __init__(self, ***)" :
       "class %%% has-a __init__ that takes self and *** parameters.",
-    "class %%%(object): \n\tdef ***(self, @@@)":
+    "class %%%(object):\n\tdef ***(self, @@@)":
       "class %%% has-a function named *** that takes self and @@@ parameters.",
     "*** = %%%()":
       "Set *** to an instance of class %%%.",
     "***.***(@@@)":
-      "From *** get the *** function , and call it with parameters self and @@@.",
+      "From *** get the *** function, and call it with parameters self, @@@.",
     "***.*** = '***'":
       "From *** get the *** attribute and set it to '***'."
 }
@@ -33,6 +33,7 @@ else:
 for word in urlopen(WORD_URL).readlines():
     WORDS.append(word.strip())
 
+
 def convert(snippet, phrase):
     class_names = [w.capitalize() for w in
                    random.sample(WORDS, snippet.count("%%%"))]
@@ -40,9 +41,9 @@ def convert(snippet, phrase):
     results = []
     param_names = []
 
-    for i in range(0, snippet.count('@@@')):
+    for i in range(0, snippet.count("@@@")):
         param_count = random.randint(1, 3)
-        param_names.append(','.join(random.sample(WORDS, param_count)))
+        param_names.append(', '.join(random.sample(WORDS, param_count)))
 
     for sentence in snippet, phrase:
         result = sentence[:]
@@ -63,6 +64,7 @@ def convert(snippet, phrase):
 
     return results
 
+
 # keep going until they hit CTRL-D
 try:
     while True:
@@ -78,6 +80,6 @@ try:
             print question
 
             raw_input("> ")
-            print "ANSWER: %s\n\n" % answer
+            print "ANSWER:  %s\n\n" % answer
 except EOFError:
     print "\nBye"
