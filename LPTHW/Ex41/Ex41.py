@@ -66,7 +66,7 @@ try:
         for snippet in snippets:
             phrase = PHRASES[snippet]
             question, answer = convert(snippet, phrase)
-            if PHRASE_FIRST:
+            if PHASES_FIRST:
                 question, answer = answer, question
 
             print question
