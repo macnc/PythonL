@@ -93,8 +93,3 @@ crouse = Salmon()
 
 # harry is-a Halibut
 harry = Halibut()
-
-# suntao is-a Employee with 20000 salary
-suntao = Employee("SunTao", 20000)
-suntao.show_salary()
-suntao.show_detail()

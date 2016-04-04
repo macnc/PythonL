@@ -3,6 +3,5 @@
 
 import Ex42
 
-
-suntao = Employee("SunTao", 200000)
-suntao.show_salary
+tjj = Employee("Tanjingjing", 120000)
+tjj.show_detail()
