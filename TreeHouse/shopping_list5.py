@@ -4,6 +4,7 @@
 import sys
 import os
 
+# Global list variable for the shopping list.
 shopping_list = []
 
 
