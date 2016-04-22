@@ -10,7 +10,7 @@
 # {'i': 2, 'am': 2, 'that': 1}
 def word_count(words):
     # Using .split() on the sentence will give you a list of words.
-    words = words.split(“ ”)
+    words = words.split(' ')
     status = {}
     # In a for loop of that list, you'll have a word that you can
     for word in words:
@@ -22,10 +22,11 @@ def word_count(words):
             # if the word exist, update the value of the key
             status[word_l] += 1
             # Or add it to the dict with something like word_dict[word] = 1.
-            else:
+        else:
                 status.update({word_l: 1})
     return status
 
 # Let's test the function
 word = input("Please say somehing as your input. > ")
-word_count(word)
+statusT = word_count(word)
+print(statusT)
