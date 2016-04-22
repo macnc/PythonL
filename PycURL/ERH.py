@@ -27,7 +27,8 @@ def header_function(header_line):
 	name, value = header_line.split(':', 1)
 
 	# Remove whitespace that may be present.
-	# Header lines include the trailing newline, and there may be whitespace
+	# Header lines include the trailing new
+	# .line, and there may be whitespace
 	# around the colon.
 	name = name.strip()
 	value = value.strip()
@@ -50,7 +51,7 @@ c.perform()
 c.close()
 
 # Figure out what encoding was sent with the response, if any.
-# Check against lowercased header name.
+# Check against lowercase header name.
 encoding = None
 if 'content-type' in headers:
 	content_type = headers['content-type'].lower()
