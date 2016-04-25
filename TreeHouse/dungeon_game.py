@@ -1,6 +1,9 @@
 #! /usr/bin/python
 # _*_coding: utf-8
 
+# Please finish the homework for showing the monster's location
+# 显示出怪兽的位置，这样就可以作弊啦，哈哈！
+
 import random
 
 CELLS = [(0, 0), (0, 1), (0, 2),
