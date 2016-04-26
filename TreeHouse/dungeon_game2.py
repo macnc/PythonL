@@ -20,15 +20,12 @@ def start_position_characters(nr_cells_hor, nr_cells_ver):
                 random.randint(0, nr_cells_ver-1))
     tupple_m = ("M", random.randint(0, nr_cells_hor-1),
                 random.randint(0, nr_cells_ver-1))
-    tupple_d = (23"D", random.randint(0, nr_cells_hor-1),
+    tupple_d = ("D", random.randint(0, nr_cells_hor-1),
                 random.randint(0, nr_cells_ver-1))
     spc = [tupple_h, tupple_m, tupple_d]
-    while (((spc[0])[1] == (spc[1])[1]) and
-           ((spc[0])[2] == (spc[1])[2])) or
-    (((spc[0])[1] == (spc[2])[1]) and
-     ((spc[0])[2] == (spc[2])[2])) or
-    (((spc[1])[1] == (spc[2])[1]) and
-     ((spc[1])[2] == (spc[2])[2])):
+    while (((spc[0])[1] == (spc[1])[1]) and ((spc[0])[2] == (spc[1])[2])) or
+    (((spc[0])[1] == (spc[2])[1]) and ((spc[0])[2] == (spc[2])[2])) or
+    (((spc[1])[1] == (spc[2])[1]) and ((spc[1])[2] == (spc[2])[2])):
             start_position_characters(nr_cells_hor, nr_cells_ver)
     else:
         return(spc)
