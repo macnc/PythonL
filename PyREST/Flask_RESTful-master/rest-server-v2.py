@@ -110,9 +110,11 @@ class TaskAPI(Resource):
         tasks.remove(task[0])
         return {'result': True}
 
+# 获取全部Task条目的API请求
+api.add_resource(TaskListAPI, '/todo/api/v2.0/tasks', endpoint='tasks')
 
-api.add_resource(TaskListAPI, '/todo/api/v1.0/tasks', endpoint='tasks')
-api.add_resource(TaskAPI, '/todo/api/v1.0/tasks/<int:id>', endpoint='task')
+# 处理单独Task条目的API请求:GET POST DELETE
+api.add_resource(TaskAPI, '/todo/api/v2.0/tasks/<int:id>', endpoint='task')
 
 
 if __name__ == '__main__':
