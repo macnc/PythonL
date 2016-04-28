@@ -1,4 +1,5 @@
-#!flask/bin/python
+#! flask/bin/python
+# _*_coding: utf-8
 
 """Alternative version of the ToDo RESTful server implemented using the
 Flask-RESTful extension."""
@@ -115,4 +116,4 @@ api.add_resource(TaskAPI, '/todo/api/v1.0/tasks/<int:id>', endpoint='task')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8666)
