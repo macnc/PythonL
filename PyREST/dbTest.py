@@ -14,23 +14,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}'.format(db_user, db_pw
 db = SQLAlchemy(app)
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(80))
-    email = db.Column(db.String(120), unique = True)
-    username = db.Column(db.String(32), index=True)
-    password_hash = db.Column(db.String(128))
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
 
-    def __int__(self, name, email, username):
-        self.name = name
-        self.email = email
+    def __init__(self, username, email):
         self.username = username
+        self.email = email
 
     def __repr__(self):
-        return '<User %r>' % self.name
+        return '<User %r>' % self.username
 
 
 class Post(db.Model):
-	id = db.Column(db.Integer, primery_key=True)
+	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(80))
 	body = db.Column(db.Text)
 	pub_date = db.Column(db.DateTime)
