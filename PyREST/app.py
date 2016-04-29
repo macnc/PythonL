@@ -5,16 +5,7 @@ from flask import Flask, jsonify, make_response, abort, request, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import fields, marshal, Resource, reqparse, Api
 from passlib.apps import custom_app_context as pwd_context
-import MySQLdb as db
-
-db_config = {
-    'host': '127.0.0.1',
-    'user': 'root',
-    'passwd': 'LoveDesign**!',
-    'db': 'Flask_RESTful'
-}
-
-con = db.connect(**db_config)
+from dbConnection import Person, db
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -45,18 +36,17 @@ task_fields = {
 }
 
 
-class User(db):
-
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(32), index=True)
-    password_hash = db.Column(db.String(128))
+class User(Person):
 
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password_hash)
+
+    def __init__(self, username, password):
+	    self.username = username
+	    self.password_hash = self.hash_password(password)
 
 
 # 需要鉴权使用的用户信息API
