@@ -6,7 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://localhost:3306/Flask_RESTful'
+USR = "root"
+pwd = "LoveDesign**!"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost:3306/Flask_RESTful'.format(USR, pwd)
 db = SQLAlchemy(app)
 
 class User(db.Model):
