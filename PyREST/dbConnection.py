@@ -9,8 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 db_user = 'root'
 db_pwd = 'LoveDesign**!'
-db_host = 'localhost:3306/Flask_RESTful'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}'.format(db_user, db_pwd, db_host)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost:3306/SQLAlchemy_db'.format(db_user, db_pwd)
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -30,7 +29,7 @@ class User(db.Model):
 
 
 class Post(db.Model):
-	id = db.Column(db.Integer, primery_key=True)
+	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(80))
 	body = db.Column(db.Text)
 	pub_date = db.Column(db.DateTime)

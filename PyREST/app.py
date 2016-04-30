@@ -5,7 +5,7 @@ from flask import Flask, jsonify, make_response, abort, request, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import fields, marshal, Resource, reqparse, Api
 from passlib.apps import custom_app_context as pwd_context
-from dbConnection import Person, db
+from dbConnection import User, db
 
 auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -36,7 +36,7 @@ task_fields = {
 }
 
 
-class User(Person):
+class User(User):
 
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)
