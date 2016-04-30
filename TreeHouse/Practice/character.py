@@ -5,7 +5,7 @@ import random
 from combat import Combat
 
 
-class Charactor(Combat):
+class Character(Combat):
     attact_limit = 10
     experience = 0
     hit_points = 10

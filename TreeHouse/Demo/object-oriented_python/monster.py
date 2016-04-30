@@ -1,6 +1,7 @@
 import random
 
 from combat import Combat
+import pep8
 
 COLORS = ['yellow', 'red', 'blue', 'green']
 
