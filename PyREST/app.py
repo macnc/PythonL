@@ -45,8 +45,8 @@ class User(User):
         return pwd_context.verify(password, self.password_hash)
 
     def __init__(self, username, password):
-	    self.username = username
-	    self.password_hash = self.hash_password(password)
+        self.username = username
+        self.password_hash = self.hash_password(password)
 
 
 # 需要鉴权使用的用户信息API
@@ -155,8 +155,8 @@ def new_user():
     return jsonify({'username': user.username}), 201, {'Location':
                                                        url_for('get_user',
                                                                id=user.id,
-                                                               _external=True)
-                                                       }
+                                                               _external=True
+                                                               })
 
 
 # Tasks RESTful API 实现第一版本
@@ -207,7 +207,8 @@ def update_task(task_id):
         abort(400)
     if 'title' in request.json and type(request.json['title']) != unicode:
         abort(400)
-    if 'description' in request.json and type(request.json['description']) is not unicode:
+    if 'description' in request.json and type(request.json['description'])
+    is not unicode:
         abort(400)
     if 'done' in request.json and type('done') is bool:
         abort(400)
