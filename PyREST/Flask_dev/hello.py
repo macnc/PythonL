@@ -3,6 +3,9 @@
 
 from flask import Flask
 from flask import request
+from flask import session
+from flask import redirect
+from flask import url_for
 from datetime import datetime
 from flask import render_template
 from flask.ext.moment import Moment
@@ -30,9 +33,9 @@ def index():
     name = None
     form = NameForm()
     if form.validate_on_submit():
-        name = form.name.data
-	form.name.data = ''
-    return render_template('index.html', form=form, name=name)
+	session['name'] = form.name.data
+	return redirect(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'))
 
 @app.route('/user/<name>')
 def user(name):
