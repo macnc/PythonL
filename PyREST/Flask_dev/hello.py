@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # _*_coding: utf-8
 
+import os
 from flask import Flask
 from flask import request
 from flask import session
@@ -16,15 +17,22 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 from flask_sqlalchemy import SQLAlchemy
+from flask.ext.mail import Mail
 
 
 app = Flask(__name__)
 manager = Manager(app)
 moment = Moment(app)
+mail = Mail(app)
 bootstrap = Bootstrap(app)
 app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LoveDesign**@localhost/flask_dev'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['MAIL_SERVER'] = 'smtp.qq.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 db = SQLAlchemy(app)
 
 
