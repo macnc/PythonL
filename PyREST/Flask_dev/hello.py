@@ -18,23 +18,38 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 from flask_sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
+from flask.ext.mail import Message
 
 
+# Flask Class/Sub-Class instantiation
 app = Flask(__name__)
 manager = Manager(app)
 moment = Moment(app)
 mail = Mail(app)
 bootstrap = Bootstrap(app)
+
+# app configuration
 app.config['SECRET_KEY'] = 'hard to guess string'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LoveDesign**@localhost/flask_dev'
+app.config['SQLALCHEMY_DATABASE_URI'] =
+    'mysql://root:LoveDesign**@localhost/flask_dev'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['MAIL_SERVER'] = 'smtp.qq.com'
+app.config['FLASK_ADMIN'] = os.environ.get('FLASK_ADMIN')
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <18568595@qq.com>'
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 db = SQLAlchemy(app)
 
+
+def send_mail(to, subject, template, **kwargs):
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject,
+    sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template + '.txt' + **kwargs)
+    msg.html = render_template(template + '.html' + **kwargs)
+    mail.send(msg)
 
 class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
