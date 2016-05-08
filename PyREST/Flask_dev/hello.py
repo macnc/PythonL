@@ -8,6 +8,7 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from flask import flash
+from threading import Thread
 from datetime import datetime
 from flask import render_template
 from flask.ext.moment import Moment
@@ -30,7 +31,7 @@ bootstrap = Bootstrap(app)
 
 # app configuration
 app.config['SECRET_KEY'] = 'hard to guess string'
-app.config['SQLALCHEMY_DATABASE_URI'] =
+app.config['SQLALCHEMY_DATABASE_URI'] = \
     'mysql://root:LoveDesign**@localhost/flask_dev'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['MAIL_SERVER'] = 'smtp.qq.com'
@@ -44,16 +45,25 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 db = SQLAlchemy(app)
 
 
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+
 def send_mail(to, subject, template, **kwargs):
     msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject,
-    sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
-    msg.body = render_template(template + '.txt' + **kwargs)
-    msg.html = render_template(template + '.html' + **kwargs)
-    mail.send(msg)
+                    sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
+
 
 class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
     submit = SubmitField('Submit')
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -63,6 +73,7 @@ class Role(db.Model):
 
     def __repr__(self):
         return '<Role %r>' % self.name
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -77,25 +88,33 @@ class User(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # user_agent = request.headers.get('User-Agent')
-    # return render_template('index.html', current_time=datetime.utcnow())
     name = None
     form = NameForm()
     if form.validate_on_submit():
-	old_name = session.get('name')
-	if old_name is not None and old_name != form.name.data:
-	    flash('Looks like you changed your name!')
-	session['name'] = form.name.data
-	return redirect(url_for('index'))
-    return render_template('index.html', form=form, name=session.get('name'))
+        user = User.query.filter_by(username=form.name.data).first()
+        if user is None:
+            db.session.add(user)
+            session['known'] = False
+            if app.config['FLASK_ADMIN']:
+                send_mail(app.config['FLASK_ADMIN'], 'New User',
+                    'mail/new_user', user=user)
+            else:
+                session['known'] = True
+            session['name'] = form.name.data
+        form.name.data=''
+        return redirect(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'), known=session.get('known', False))
+
 
 @app.route('/user/<name>')
 def user(name):
     return render_template('user.html', name=name)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 @app.errorhandler(500)
 def internal_server_error(e):
