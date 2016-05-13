@@ -8,7 +8,7 @@ import exceptions
 import itertools
 from time import sleep
 from os import path
-import human_curl as hurl
+import requests rq
 
 
 '''
@@ -16,6 +16,7 @@ import human_curl as hurl
 会根据发布服务的docker设计方案变化而发生变化。脚本完成的详细工作在run()方法的help doc中有详
 细的说明。
 '''
+
 
 # 生成docker容器配置变量信息的函数
 def docker():
@@ -28,7 +29,7 @@ def docker():
     5. 此次发布的web-app源代码投放的具体目录位置
     '''
     docker_config = {}
-    docker_config['version'] = int(raw_input('请输入你要发布的版本号，只写数字不必加字母v: '))
+    docker_config['version'] = float(raw_input('请输入你要发布的版本号，只写数字不必加字母v: '))
     while True:
         flag = raw_input('想发版本是吧？你想要发红(R)？还是发绿(G)？ ')
         if flag.lower() == 'r':
@@ -59,14 +60,16 @@ def new_folder(docker_config):
     1. 调用此函数时，需要用户手动在控制台输入要发布的版本号
     2. 根据输入的版本号目录，自动生成docker的蓝绿发布模板目录结构
     '''
-
     rg_folders = ['green', 'red']
     service_folders = ['webapp', 'log']
 
-    for rg, service in itertools.product(rg_folders, service_folders):
-        os.makedirs(os.path.join(docker_config['root_path'], rg, service))
+    if path.exists(docker_config['root_path']):
+        print '该目录已经存在，不再重复创建.'
+    else:
+        for rg, service in itertools.product(rg_folders, service_folders):
+            os.makedirs(os.path.join(docker_config['root_path'], rg, service))
 
-    print 'docker测试工程目录创建成功！ 下面是目录结构: '
+        print 'docker测试工程目录创建成功！ 下面是目录结构: '
     os.system('tree {root_path}'.format(**docker_config))
 
 
@@ -99,26 +102,24 @@ def new_container(docker_config):
     ac_code = None
     print '即将为此次发布创建容器...'
     if docker_config['flag'] == 'green':
-        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/\
-        {flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/\
-        {flag}/log:/tomcat/logs --name mpj-V{version}-{flag} \
-        tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
-
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
+        # print ac_code
         try:
             os.system(ac_code)
+            sleep(3)
+            os.system('sh switchRG.sh green')
         except:
             print 'shell命令有误，请核查.'
             sys.exit()
         print '此次发布为绿色分支，属于预备正式发布阶段，容器已经创建并启动完毕！'
 
     elif docker_config['flag'] == 'red':
-        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/\
-        {flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/\
-        {flag}/log:/tomcat/logs --name mpj-V{version}-{flag} \
-        tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
-
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
+        # print ac_code
         try:
             os.system(ac_code)
+            sleep(3)
+            os.system('sh switchRG.sh red')
         except:
             print 'shell命令有误，请核查.'
             sys.exit()
@@ -127,10 +128,14 @@ def new_container(docker_config):
 
 # 测试上线服务的可用性
 def test(docker_config):
-    t1 = hurl.get('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
-    s_code = t1._status_code
-    if s_code == 200:
+    t1 = requests.head('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
+    t2 = requests.head('http://beta.menpuji.com/pos/index.html')
+    stc1 = t1.status_code
+    stc2 = t2.status_code
+    if stc1 == 200 and stc2 == 200:
         print '测试服务器部署完毕，可以愉快的进行业务测试了。^_^**'
+    elif st1 == 200 and stc2 != 200:
+        print 'Tomcat docker服务已经启动，但是端口映射有问题'
     else:
         print '服务器部署不成功，查一下代理服务器配置信息。<..>'
         sys.exit()
@@ -155,8 +160,13 @@ def run():
         new_folder(docker_config)
         unzip_war('menpuji.war', docker_config['war_target'])
         new_container(docker_config)
-        test_service(docker_config)
+	    print '10秒钟等待Docker容器服务正常启动...'
+        sleep(10)
+        test(docker_config)
         sys.exit()
     else:
         print '请上传war包文件，然后重新启动此自动化部署脚本程序.'
         sys.exit()
+
+
+# run()
