@@ -4,6 +4,7 @@
 
 import os
 import sys
+import exceptions
 import itertools
 from time import sleep
 from os import path
@@ -95,12 +96,32 @@ def new_container(docker_config):
     3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
     4. root_path: 本次发布生成版本目录的根目录名
     '''
+    ac_code = None
     print '即将为此次发布创建容器...'
-    if docker['flag'] == 'green':
-	os.system('docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config))
+    if docker_config['flag'] == 'green':
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/\
+        {flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/\
+        {flag}/log:/tomcat/logs --name mpj-V{version}-{flag} \
+        tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
+
+        try:
+            os.system(ac_code)
+        except:
+            print 'shell命令有误，请核查.'
+            sys.exit()
         print '此次发布为绿色分支，属于预备正式发布阶段，容器已经创建并启动完毕！'
-    elif docker['flag'] == 'red':
-        os.system('docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config))
+
+    elif docker_config['flag'] == 'red':
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/\
+        {flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/\
+        {flag}/log:/tomcat/logs --name mpj-V{version}-{flag} \
+        tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
+
+        try:
+            os.system(ac_code)
+        except:
+            print 'shell命令有误，请核查.'
+            sys.exit()
         print '此次发布为红色分支，为您做好测试的准备。即将为您测试容器服务是否正常...'
 
 
