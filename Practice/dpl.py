@@ -222,13 +222,13 @@ def run():
         if len(os.listdir(docker_config['root_path'])) is not None:
             print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
             while True:
-                choice = raw_input('请输入你的决定: y 或者 n')
-                if choice.lower == 'y':
+                choice = raw_input('请用字母输入你的决定: (y)是 或者 (n)不 \n >> ')
+                if choice.lower() == 'y':
                     clear(docker_config['war_target'])
                     unzip_war('menpuji.war', docker_config['war_target'])
                     print '待发布文件已经全部被替换更新！'
                     break
-                elif choice.lower == 'n':
+                elif choice.lower() == 'n':
                     print '文件不执行更新操作，解压程序跳过，进入下一步...'
                     break
                 else:
@@ -240,12 +240,12 @@ def run():
         print '5. 为本次发布创建Docker服务容器，并启动docker \n'
         sleep(4)
         new_container(docker_config)
-        print '10秒钟等待Docker容器服务正常启动...'
+        print '10秒钟等待Docker容器服务正常启动... \n'
         sleep(10)
         print '6. 测试在线服务的可用性，请稍等4s... \n'
         sleep(2)
         test(docker_config)
-        print 'v' * 20 + '\n'
+        print '√' * 100 + '\n'
         print '自动化部署程序已经全部执行完毕!'
         sys.exit()
     else:
@@ -253,4 +253,4 @@ def run():
         sys.exit()
 
 
-# run()
+run()
