@@ -31,7 +31,19 @@ def docker():
     5. 此次发布的web-app源代码投放的具体目录位置
     '''
     docker_config = {}
-    docker_config['version'] = float(raw_input('请输入你要发布的版本号，只写数字不必加字母v: '))
+    while True:
+        source_number = raw_input('请输入你要发布的版本号，只写(数字)不必加v: ')
+        try:
+            if '.' in source_number:
+                docker_config['version'] = float(source_number)
+                break
+            else:
+                docker_config['version'] = int(source_number)
+                break
+        except:
+            print "只接受(数字)输入，字母和其他字符都不接受! 请重新输入: "
+            continue
+
     while True:
         flag = raw_input('想发版本是吧？你想要发红(R)？还是发绿(G)？ ')
         if flag.lower() == 'r':
