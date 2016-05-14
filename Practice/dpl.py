@@ -133,10 +133,11 @@ def new_container(docker_config):
     4. root_path: 本次发布生成版本目录的根目录名
     '''
     ac_code = None
-    tc = cmdline('docker ps -f name={container}'.format(**docker_config))
+    tc = cmdline('docker ps -a -f name={container}'.format(**docker_config))
     tc_list = tc.split()
     if docker_config['container'] in tc_list:
-        print '名为:{container}的docker容器已经存在，不再重复创建。'
+        print '名为:{container}的docker容器已经存在，不再重复创建。'.format(**docker_config)
+        os.system('docker restart {container}'.format(**docker_config))
         return
     else:
         print '即将为此次发布创建docker服务容器...'
@@ -167,8 +168,8 @@ def new_container(docker_config):
 
 # 测试上线服务的可用性
 def test(docker_config):
-    t1 = requests.head('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
-    t2 = requests.head('http://beta.menpuji.com/pos/index.html')
+    t1 = rq.head('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
+    t2 = rq.head('http://beta.menpuji.com/pos/index.html')
     stc1 = t1.status_code
     stc2 = t2.status_code
     if stc1 == 200 and stc2 == 200:
@@ -193,18 +194,43 @@ def run():
     7. 测试通过后，完成发布通知。退出主控制程序。
     '''
     if path.isfile('menpuji.war'):
-        print 'war包已经就绪，请确认war包的正确性: 4s确认时间...'
+        print '1. 已经检测到war包文件，请确认war包的正确性！ 4s后启动部署程序...\n'
+        sleep(4)
+        print '2. 正在准备本次发布的包信息... \n'
         sleep(4)
         docker_config = docker()
+        print '3. 为本次发布创建工程目录... \n'
         sleep(4)
         new_folder(docker_config)
+        print '4. 准备解压发布war包文件到指定的发布目录... \n'
         sleep(4)
-        unzip_war('menpuji.war', docker_config['war_target'])
+        if len(os.listdir(docker_config['root_path'])) is not None:
+            print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
+            while True:
+                choice = raw_input('请输入你的决定: y 或者 n')
+                if choice.lower == 'y':
+                    os.system('rm -rf *')
+                    unzip_war('menpuji.war', docker_config['war_target'])
+                    print '待发布文件已经全部更新！'
+                    break
+                elif choice.lower == 'n':
+                    print '文件不执行更新操作，解压程序跳过，进入下一步...'
+                    break
+                else:
+                    print '请输入字母[Y]或者[N], 其他值都不被程序所接受! \n'
+                    continue
+        else:
+            print '解压程序启动，准备解压war包到发布目录...'
+            unzip_war('menpuji.war', docker_config['war_target'])
+        print '5. 为本次发布创建Docker服务容器，并启动docker \n'
         sleep(4)
         new_container(docker_config)
         print '10秒钟等待Docker容器服务正常启动...'
         sleep(10)
+        print '6. 测试在线服务的可用性，请稍等4s... \n'
+        sleep(2)
         test(docker_config)
+        print 'v' * 20 + '\n'
         print '自动化部署程序已经全部执行完毕!'
         sys.exit()
     else:
