@@ -11,6 +11,7 @@ from os import path
 import requests as rq
 from subprocess import PIPE
 from subprocess import Popen
+import shutil
 
 
 '''
@@ -84,6 +85,20 @@ def cmdline(command):
         shell=True
     )
     return process.communicate()[0]
+
+
+def clear(path):
+    '''
+    清空文件夹的公用方法，不依赖docker_config packing参数
+    此方法会清除目标路径下的所有内容：文件和文件夹
+    '''
+    for thing in os.listdir(path):
+        th_path = os.path.join(path, thing)
+        if os.path.isfile(th_path):
+            os.remove(th_path)
+            print '%s has been removed.' % th_path
+        elif os.path.isdir(th_path):
+            shutil.rmtree(th_path)
 
 
 # 创建版本发布时，蓝绿发布的的目录结构
@@ -209,9 +224,9 @@ def run():
             while True:
                 choice = raw_input('请输入你的决定: y 或者 n')
                 if choice.lower == 'y':
-                    os.system('rm -rf *')
+                    clear(docker_config['war_target'])
                     unzip_war('menpuji.war', docker_config['war_target'])
-                    print '待发布文件已经全部更新！'
+                    print '待发布文件已经全部被替换更新！'
                     break
                 elif choice.lower == 'n':
                     print '文件不执行更新操作，解压程序跳过，进入下一步...'
