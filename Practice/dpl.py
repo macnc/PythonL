@@ -48,16 +48,16 @@ def docker():
     while True:
         flag = raw_input('想发版本是吧？你想要发红(R)？还是发绿(G)？ ')
         if flag.lower() == 'r':
-	        docker_config['flag'] = 'red'
-	        docker_config['port'] = 9001
-	        break
+            docker_config['flag'] = 'red'
+            docker_config['port'] = 9001
+            break
         elif flag.lower() == 'g':
-	        docker_config['flag'] = 'green'
-	        docker_config['port'] = 9000
-	        break
+            docker_config['flag'] = 'green'
+            docker_config['port'] = 9000
+            break
         else:
-	        print '请输入英文字母(R)或者(G)，其他值都不被接受!!!'
-	        continue
+            print '请输入英文字母(R)或者(G)，其他值都不被接受!!!'
+            continue
     docker_config['root_path'] = 'mAPP-docker-v{version}'.format(**docker_config)
     docker_config['container'] = 'mpj-V{version}-{flag}'.format(**docker_config)
     docker_config['war_target'] = './{root_path}/{flag}/webapp/'.format(**docker_config)
@@ -183,13 +183,17 @@ def new_container(docker_config):
 
 # 测试上线服务的可用性
 def test(docker_config):
+    '''
+    :param docker_config: docker配置信息字典参数
+    :return: 返回测试结果
+    '''
     t1 = rq.head('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
     t2 = rq.head('http://beta.menpuji.com/pos/index.html')
     stc1 = t1.status_code
     stc2 = t2.status_code
     if stc1 == 200 and stc2 == 200:
         print '测试服务器部署完毕，可以愉快的进行业务测试了。^_^**'
-    elif st1 == 200 and stc2 != 200:
+    elif stc1 == 200 and stc2 != 200:
         print 'Tomcat docker服务已经启动，但是端口映射有问题'
     else:
         print '服务器部署不成功，请查一下代理服务器配置信息。<..>'
