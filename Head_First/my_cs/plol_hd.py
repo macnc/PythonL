@@ -2,12 +2,7 @@
 # _*_coding: utf-8
 
 
-from print_lol import *
-# # try:
-# #     from nester import *
-# # except ImportError as e:
-# #     print("There's no packages like name nester on local: <" + str(e) + '>')
-# import sys
+from print_lol import print_lol
 
 
 man = []
@@ -19,14 +14,15 @@ try:
     with open('sketch.txt') as data:
         for each_line in data:
             try:
-                (role, line_spoken) = each_line.split(':', 1)
+                (role, line_spoken) = each_line.split(":", 1)
                 line_spoken = line_spoken.strip()
                 if role == 'Man':
                     man.append(line_spoken)
                 elif role == 'Other Man':
                     other.append(line_spoken)
             except ValueError as er:
-                print("The detail: <" + str(er) + '>')
+                print("The error detail: <" + str(er) + '>')
+            
 
     # 有了with，不用再加入关闭文件流操作了，因为with会自动处理这些东西
     # data.close()
