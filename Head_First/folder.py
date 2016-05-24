@@ -5,12 +5,14 @@ import os
 
 class Folder(list):
 	# Create the basic information for the structure of the folder
-	def __init__(self, name, c_list=[], f_name=None):
+	def __init__(self, name, c_list=[], f=None, c=None):
 		'''The constrcutor method for creating new Folder object.
 		We will add the basic information data here.'''
 		self.name = name
 		self.content = c_list
-		self.father = f_name
+		self.father = f
+		self.child =c
+		self.pwd = '%s/%s/' % (self.father.name, self.name)
 
 		# After the basic data has been created, we will invoke the
 		# other method for create reall stuff in the current folder
@@ -22,6 +24,7 @@ class Folder(list):
 				mk_dir(item.name)
 			else:
 				mk_file(item)
+
 
 	# Public method for adding content in the folder
 	def add_content(self, s_list):
@@ -41,11 +44,13 @@ class Folder(list):
 	def mk_file(self, name, path=None):
 		'''Get the file information from the content list.
 		If the data type is string, then create the file with
-		invoking the os.system('') methon with shell.'''
+		invoking the os.utime() methond for creating files.'''
 		if path is not None:
-			os.system('touch %s/%s' % (path, name))
+			with open(path + name, 'a'):
+				os.utime(path + name, None)
 		else:
-			os.system('touch %s' % name)
+			with open(name, 'a'):
+				os.utime(name, None)
 
 
 	def mk_dir(self, name, path=None):
@@ -54,4 +59,6 @@ class Folder(list):
 		invoke the Folder class constructor function for making
 		new folder object with some content.'''
 		if path is not None:
-			os.system('mkdir %s/%s' % name)
+			os.makedirs(path + name)
+		else:
+			os.makedirs(name)
