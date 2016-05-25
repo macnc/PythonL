@@ -30,17 +30,14 @@ def get_coach_data(filename):
 		print("File error: " + str(ioerr))
 		return(None)
 
+
 # Scan the 2gn sub-folder for list all of txt file as a list data type
 #files = []
 os.chdir("2gn/")
 #for file in glob.glob("*.txt"):
 #	files.append(file)
 
-# Iteraling all of these files for making sporter's data
+# Iteraling all of these files for generating athlete's data
 for item in glob.glob("*.txt"):
 	people = get_coach_data(item)
 	print(people['Name'] + "'s fastest time are:" + people['Times'])
-	
-	
-	
-	

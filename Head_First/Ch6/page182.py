@@ -32,4 +32,3 @@ sara_data['Dob'] = sara.pop(0)
 sara_data['Times'] = sara
 
 print(sara_data['Name'] + "'s fastest times are: " + str(sorted(set([sanitize(t) for t in sara_data['Times']]))[0:3]))
-
