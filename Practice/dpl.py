@@ -187,16 +187,25 @@ def new_container(docker_config):
 
 # 测试上线服务的可用性
 def test(docker_config):
-    t1 = rq.head('http://beta.menpuji.com:{port}/pos/index.html'.format(**docker_config))
+    t1 = rq.head("http://beta.menpuji.com:{port}/pos/index.html".format(**docker_config))
     t2 = rq.head('http://beta.menpuji.com/pos/index.html')
     stc1 = t1.status_code
     stc2 = t2.status_code
+    counter = 0
     if stc1 == 200 and stc2 == 200:
         print '测试服务器部署完毕，可以愉快的进行业务测试了。^_^**'
     elif stc1 == 200 and stc2 != 200:
-        print 'Tomcat docker服务已经启动，但是端口映射有问题'
+        print 'Tomcat docker服务已经启动，但是端口映射有问题, 等待10s修复端口问题...'
+        os.system('nginx -s reload')
+        sleep(2)
+        os.system('switchRG {flag}'.format(**docker_config))
+        os.system('nginx -s reload')
+        print '等待5秒钟重新开始测试...'
+        sleep(3)
+        print('重新启动测试程序...')
+        test(docker_config)
     else:
-        print '服务器部署不成功，请查一下代理服务器配置信息。<..>'
+        print '服务器部署失败！ 我暂时搞不定，麻烦您手动恢复服务。您辛苦！抱歉！！'
         sys.exit()
 
 
@@ -257,4 +266,4 @@ def run():
         sys.exit()
 
 
-run()
+# run()
