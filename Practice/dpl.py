@@ -195,7 +195,7 @@ def test(docker_config):
     if stc1 == 200 and stc2 == 200:
         print '测试服务器部署完毕，可以愉快的进行业务测试了。^_^**'
     elif stc1 == 200 and stc2 != 200:
-        print 'Tomcat docker服务已经启动，但是端口映射有问题, 等待10s修复端口问题...'
+        print 'Tomcat docker服务已经启动，但是端口映射有问题, 等待10s自动修复...'
         os.system('nginx -s reload')
         sleep(2)
         os.system('switchRG {flag}'.format(**docker_config))
