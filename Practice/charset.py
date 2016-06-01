@@ -4,4 +4,4 @@
 
 charset = 'abcdefghijklmnopqrstuvwxyz' * 3
 for i in range(0, len(charset)/2):
-        print charset[len(charset)-1-i:i:-1]
+        print " " * i +  charset[len(charset)-1-i:i:-1]
