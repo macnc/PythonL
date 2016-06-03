@@ -71,7 +71,7 @@ def docker():
 # 公用方法，用于返回os.system(command)执行之后的结果内容数据
 def cmdline(command):
     '''
-    公用方法，用途是Python脚本使用os.sysrem()语句时，命令台上执行了shell命令之后输出的所有
+    公用方法，用途是Python脚本使用os.system()语句时，命令台上执行了shell命令之后输出的所有
     内容；此方法最终将返回这些内容数据。
 
     在此脚本中，用来处理docker命令的返回值。例如在后面创建容器的方法中，需要先通过docker ps
@@ -132,8 +132,40 @@ def unzip_war(war_file, target):
     os.system('unzip %s -d %s' % (war_file, target))
 
 
+def create_container(docker_config):
+    if docker_config['flag'] == 'green':
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(
+            **docker_config)
+        # print ac_code
+        try:
+            os.system(ac_code)
+            print '新容器创建完毕!'
+            sleep(3)
+            print '正在切换Nginx服务映射端口...'
+            os.system('sh switchRG.sh green')
+            print '此次发布为绿色分支，属于预备正式发布阶段，容器已经创建并启动完毕！'
+        except:
+            print 'shell命令有误，请核查.'
+            sys.exit()
+
+    elif docker_config['flag'] == 'red':
+        ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(
+            **docker_config)
+        # print ac_code
+        try:
+            os.system(ac_code)
+            print '新容器创建完毕!'
+            sleep(3)
+            print '正在切换Nginx服务映射端口...'
+            os.system('sh switchRG.sh red')
+            print '此次发布为红色分支，已经您做好测试的准备。即将为您测试容器服务是否正常...'
+        except:
+            print 'shell命令有误，请核查.'
+            sys.exit()
+
+
 # 创建Docker镜像创建对应的蓝绿发布容器, 启动容器服务
-def new_container(docker_config):
+def docker_container(docker_config):
     '''创建容器的方法需要考虑以下设计问题：
     1. 尽可能把所有公用的数据抽取出来存储在一个公共数据对象中，方便全局的随时存取使用
     2. 对于创建容器的命令中，关于本次发布的所有公共信息可以使用字典的unpacking语法来实现替换
@@ -147,6 +179,8 @@ def new_container(docker_config):
     3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
     4. root_path: 本次发布生成版本目录的根目录名
     '''
+
+    os.system('service docker restart')
     ac_code = None
     tc = cmdline('docker ps -a -f name={container}'.format(**docker_config))
     tc_list = tc.split()
@@ -154,7 +188,10 @@ def new_container(docker_config):
         while True:
             decision = raw_input('该名称的容器已经存在,是否要删除该容器重新创建新的? (Y)es or (N)o\n> ')
             if decision.lower() == 'y':
-                os.system('docker rm {container}'.format(**docker_config))
+                print '请等待数秒钟完成容器的删除并开始新容器的创建...'
+                os.system('docker rm -f {container}'.format(**docker_config))
+                print '旧容器删除完成, 开始新容器的创建...'
+                create_container(docker_config)
                 break
             elif decision.lower() == 'n':
                 print '名为:{container}的docker容器已经存在，不再重复创建。 将重启docker容器...'.format(**docker_config)
@@ -173,29 +210,7 @@ def new_container(docker_config):
         print '即将为此次发布创建docker服务容器做准备, 请等待10s...'
         os.system('docker stop $(docker ps -a -q)')
         sleep(5)
-        if docker_config['flag'] == 'green':
-            ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
-            # print ac_code
-            try:
-                os.system(ac_code)
-                sleep(3)
-                os.system('sh switchRG.sh green')
-            except:
-                print 'shell命令有误，请核查.'
-                sys.exit()
-            print '此次发布为绿色分支，属于预备正式发布阶段，容器已经创建并启动完毕！'
-
-        elif docker_config['flag'] == 'red':
-            ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
-            # print ac_code
-            try:
-                os.system(ac_code)
-                sleep(3)
-                os.system('sh switchRG.sh red')
-            except:
-                print 'shell命令有误，请核查.'
-                sys.exit()
-            print '此次发布为红色分支，为您做好测试的准备。即将为您测试容器服务是否正常...'
+        create_container(docker_config)
 
 
 # 测试上线服务的可用性
@@ -265,7 +280,7 @@ def run():
             unzip_war('menpuji.war', docker_config['war_target'])
         print '5. 为本次发布创建Docker服务容器，并启动docker \n'
         sleep(4)
-        new_container(docker_config)
+        docker_container(docker_config)
         print '10秒钟等待Docker容器服务正常启动... \n'
         sleep(10)
         print '6. 测试在线服务的可用性，请稍等4s... \n'
