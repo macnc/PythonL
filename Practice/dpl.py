@@ -48,16 +48,16 @@ def docker():
     while True:
         flag = raw_input('想发版本是吧？你想要发红(R)？还是发绿(G)？ ')
         if flag.lower() == 'r':
-	        docker_config['flag'] = 'red'
-	        docker_config['port'] = 9001
-	        break
+            docker_config['flag'] = 'red'
+            docker_config['port'] = 9001
+            break
         elif flag.lower() == 'g':
-	        docker_config['flag'] = 'green'
-	        docker_config['port'] = 9000
-	        break
+            docker_config['flag'] = 'green'
+            docker_config['port'] = 9000
+            break
         else:
-	        print '请输入英文字母(R)或者(G)，其他值都不被接受!!!'
-	        continue
+            print '请输入英文字母(R)或者(G)，其他值都不被接受!!!'
+            continue
     docker_config['root_path'] = 'mAPP-docker-v{version}'.format(**docker_config)
     docker_config['container'] = 'mpj-V{version}-{flag}'.format(**docker_config)
     docker_config['war_target'] = './{root_path}/{flag}/webapp/'.format(**docker_config)
@@ -151,13 +151,24 @@ def new_container(docker_config):
     tc = cmdline('docker ps -a -f name={container}'.format(**docker_config))
     tc_list = tc.split()
     if docker_config['container'] in tc_list:
-        print '名为:{container}的docker容器已经存在，不再重复创建。'.format(**docker_config)
-        try:
-            os.system('docker restart {container}'.format(**docker_config))
-            sleep(3)
-            return 'Docker\'s ready!'
-	except:
-            print 'Restart docker failed'
+        while True:
+            decision = raw_input('该名称的容器已经存在,是否要删除该容器重新创建新的? (Y)es or (N)o\n> ')
+            if decision.lower() == 'y':
+                os.system('docker rm {container}'.format(**docker_config))
+                break
+            elif decision.lower() == 'n':
+                print '名为:{container}的docker容器已经存在，不再重复创建。 将重启docker容器...'.format(**docker_config)
+                try:
+                    os.system('docker restart {container}'.format(**docker_config))
+                    sleep(3)
+                    return 'Docker\'s ready!'
+                except:
+                    print 'Restart docker failed'
+                finally:
+                    break
+            else:
+                print '决定无法识别, 请输入合法的字母: 只接受字母[Y]和[N]。'
+                continue
     else:
         print '即将为此次发布创建docker服务容器...'
         if docker_config['flag'] == 'green':
