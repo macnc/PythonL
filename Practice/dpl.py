@@ -170,7 +170,9 @@ def new_container(docker_config):
                 print '决定无法识别, 请输入合法的字母: 只接受字母[Y]和[N]。'
                 continue
     else:
-        print '即将为此次发布创建docker服务容器...'
+        print '即将为此次发布创建docker服务容器做准备, 请等待10s...'
+        os.system('docker stop $(docker ps -a -q)')
+        sleep(5)
         if docker_config['flag'] == 'green':
             ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(**docker_config)
             # print ac_code
