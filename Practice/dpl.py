@@ -133,6 +133,15 @@ def unzip_war(war_file, target):
 
 
 def create_container(docker_config):
+    '''
+    函数用法：
+    传入的参数docker_config为一个字典数据类型，该数据对象中必须包含有生成docker容器指令对应
+    的所有数据信息：
+    1. version: 版本号，类型为数字，int和float都可以
+    2. flag: 红绿发布的开关标示，只有两个值是有效的：green或者red
+    3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
+    4. root_path: 本次发布生成版本目录的根目录名
+    '''
     if docker_config['flag'] == 'green':
         ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(
             **docker_config)
@@ -155,7 +164,6 @@ def create_container(docker_config):
         try:
             os.system(ac_code)
             print '新容器创建完毕!'
-            sleep(3)
             print '正在切换Nginx服务映射端口...'
             os.system('sh switchRG.sh red')
             print '此次发布为红色分支，已经您做好测试的准备。即将为您测试容器服务是否正常...'
@@ -170,14 +178,13 @@ def docker_container(docker_config):
     1. 尽可能把所有公用的数据抽取出来存储在一个公共数据对象中，方便全局的随时存取使用
     2. 对于创建容器的命令中，关于本次发布的所有公共信息可以使用字典的unpacking语法来实现替换
     3. 第一个版本的容器创建方法，先简单调用shell命令实现，优雅的代码后续继续重构
-
-    函数用法：
-    传入的参数docker_config为一个字典数据类型，该数据对象中必须包含有生成docker容器指令对应
-    的所有数据信息：
-    1. version: 版本号，类型为数字，int和float都可以
-    2. flag: 红绿发布的开关标示，只有两个值是有效的：green或者red
-    3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
-    4. root_path: 本次发布生成版本目录的根目录名
+    
+    主流程：
+    1. 首先重启docker服务
+    2. 检查要创建的容器是否已经存在
+    3. 如果要创建的容器实例存在，提供是否要删除容器重新创建的逻辑
+    4. 如果不再重复创建已存在的容器，则重启已经存在的docker容器
+    5. 如果是第一次创建，直接执行创建容器命令
     '''
 
     os.system('service docker restart')
@@ -197,14 +204,13 @@ def docker_container(docker_config):
                 print '名为:{container}的docker容器已经存在，不再重复创建。 将重启docker容器...'.format(**docker_config)
                 try:
                     os.system('docker restart {container}'.format(**docker_config))
-                    sleep(3)
-                    return 'Docker\'s ready!'
-                except:
+                    print "Docker's READY!"
+                except OSError:
                     print 'Restart docker failed'
                 finally:
                     break
             else:
-                print '决定无法识别, 请输入合法的字母: 只接受字母[Y]和[N]。'
+                print '请输入合法的字母: 只接受字母[Y]和[N]。'
                 continue
     else:
         print '即将为此次发布创建docker服务容器做准备, 请等待10s...'
@@ -226,7 +232,7 @@ def test(docker_config):
         print 'Tomcat docker服务已经启动，但是端口映射有问题, 等待10s自动修复...'
         os.system('nginx -s reload')
         sleep(2)
-        os.system('switchRG {flag}'.format(**docker_config))
+        os.system('sh switchRG.sh {flag}'.format(**docker_config))
         os.system('nginx -s reload')
         print '等待5秒钟重新开始测试...'
         sleep(3)
@@ -251,15 +257,11 @@ def run():
     '''
     if path.isfile('menpuji.war'):
         print '1. 已经检测到war包文件，请确认war包的正确性！ 4s后启动部署程序...\n'
-        sleep(4)
         print '2. 正在准备本次发布的包信息... \n'
-        sleep(4)
         docker_config = docker()
         print '3. 为本次发布创建工程目录... \n'
-        sleep(4)
         new_folder(docker_config)
         print '4. 准备解压发布war包文件到指定的发布目录... \n'
-        sleep(4)
         if len(os.listdir(docker_config['root_path'])) is not None:
             print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
             while True:
@@ -279,12 +281,10 @@ def run():
             print '解压程序启动，准备解压war包到发布目录...'
             unzip_war('menpuji.war', docker_config['war_target'])
         print '5. 为本次发布创建Docker服务容器，并启动docker \n'
-        sleep(4)
         docker_container(docker_config)
-        print '10秒钟等待Docker容器服务正常启动... \n'
-        sleep(10)
+        print '5秒钟等待Docker容器服务正常启动... \n'
+        sleep(5)
         print '6. 测试在线服务的可用性，请稍等4s... \n'
-        sleep(2)
         test(docker_config)
         print '√' * 100 + '\n'
         print '自动化部署程序已经全部执行完毕!'
