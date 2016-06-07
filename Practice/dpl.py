@@ -4,7 +4,6 @@
 
 import os
 import sys
-import exceptions
 import itertools
 from time import sleep
 from os import path
