@@ -9,7 +9,7 @@ with open('PaceData.csv') as data:
 
 	for each_line in data:
 		row = each_line.strip().split(',')
-		row_label = row(0)
+		row_label = row.pop(0)
 		inner_dict = {}
 		for i in range(len(column_heading)):
 			inner_dict[row[i]] = column_heading[i]
