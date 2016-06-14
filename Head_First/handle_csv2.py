@@ -2,6 +2,14 @@
 # _*_coding: utf-8
 
 
+from find_it import find_closest
+from tm2secs2tm import time2secs, secs2time
+
+def find_nearest_time(look_for, target_data):
+	what = time2secs(look_for)
+	where = 
+
+
 row_data = {}
 with open('PaceData.csv') as data:
 	column_heading = data.readline().strip().split(',')
