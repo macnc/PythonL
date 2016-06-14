@@ -261,7 +261,7 @@ def run():
         print '3. 为本次发布创建工程目录... \n'
         new_folder(docker_config)
         print '4. 准备解压发布war包文件到指定的发布目录... \n'
-        if len(os.listdir(docker_config['root_path'])) is not None:
+        if not os.listdir(docker_config['root_path']):
             print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
             while True:
                 choice = raw_input('请用字母输入你的决定: (y)是 或者 (n)不 \n >> ')
