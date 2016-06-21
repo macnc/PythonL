@@ -202,7 +202,8 @@ def docker_container(docker_config):
             elif decision.lower() == 'n':
                 print '名为:{container}的docker容器已经存在，不再重复创建。 将重启docker容器...'.format(**docker_config)
                 try:
-                    os.system('docker restart {container}'.format(**docker_config))
+                    os.system('docker stop {container}'.format(**docker_config))
+		    os.system('docker start {container}'.format(**docker_config))
                     print "Docker's READY!"
                 except OSError:
                     print 'Restart docker failed'
@@ -261,7 +262,7 @@ def run():
         print '3. 为本次发布创建工程目录... \n'
         new_folder(docker_config)
         print '4. 准备解压发布war包文件到指定的发布目录... \n'
-        if not os.listdir(docker_config['root_path']):
+        if os.listdir(docker_config['root_path']) is not None:
             print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
             while True:
                 choice = raw_input('请用字母输入你的决定: (y)是 或者 (n)不 \n >> ')
