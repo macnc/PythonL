@@ -2,7 +2,7 @@
 # _*_coding: utf-8
 
 # Author: SunTao
-# Last updated: Saturday, June 25, 2016 at 12:28:16 AM
+# Last updated: Monday, June 27, 2016 at 11:28:11 AM
 
 import shutil
 from os import listdir, remove
@@ -24,6 +24,7 @@ soft_path = download_path + 'Soft/'
 dev_path = download_path + 'Dev/'
 pdf_path = root_path + 'Dropbox/Docs/'
 image_path = root_path + 'Pictures/'
+ms_path = download_path + 'Mindset/'
 
 
 # The current file list in downloads folder.
@@ -47,6 +48,7 @@ docs_file = word_file + ppt_file + excel_file + files('.txt') + files('.rtf')
 # This part of the code is defination of the  for the specific using
 # as personal.
 soft_file = files('.dmg')
+mindset_file = files('.xmind')
 pdf_file = files('.pdf')
 dev_file = files('.log') + files('.dat')
 image_file = files('.jpg') + files('.jpeg') + files('.png') + files('.gif') + files('.bmp')
@@ -59,7 +61,8 @@ file_dict = {
 	image_path: image_file,
 	pdf_path: pdf_file,
 	soft_path: soft_file,
-	dev_path: dev_file
+	dev_path: dev_file,
+	ms_path: mindset_file
 }
 
 # Create a workflow for handling all of file types

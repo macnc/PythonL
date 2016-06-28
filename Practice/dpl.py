@@ -4,6 +4,7 @@
 
 import os
 import sys
+import exceptions
 import itertools
 from time import sleep
 from os import path
@@ -132,15 +133,6 @@ def unzip_war(war_file, target):
 
 
 def create_container(docker_config):
-    '''
-    函数用法：
-    传入的参数docker_config为一个字典数据类型，该数据对象中必须包含有生成docker容器指令对应
-    的所有数据信息：
-    1. version: 版本号，类型为数字，int和float都可以
-    2. flag: 红绿发布的开关标示，只有两个值是有效的：green或者red
-    3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
-    4. root_path: 本次发布生成版本目录的根目录名
-    '''
     if docker_config['flag'] == 'green':
         ac_code = 'docker run -d -p {port}:9000 -v /home/mpj/app/{root_path}/{flag}/webapp/:/tomcat/webapps/menpuji -v /home/mpj/app/{root_path}/{flag}/log:/tomcat/logs --name mpj-V{version}-{flag} tomcat_menpuji:menpuji_webapp_beta_java_node'.format(
             **docker_config)
@@ -177,13 +169,14 @@ def docker_container(docker_config):
     1. 尽可能把所有公用的数据抽取出来存储在一个公共数据对象中，方便全局的随时存取使用
     2. 对于创建容器的命令中，关于本次发布的所有公共信息可以使用字典的unpacking语法来实现替换
     3. 第一个版本的容器创建方法，先简单调用shell命令实现，优雅的代码后续继续重构
-    
-    主流程：
-    1. 首先重启docker服务
-    2. 检查要创建的容器是否已经存在
-    3. 如果要创建的容器实例存在，提供是否要删除容器重新创建的逻辑
-    4. 如果不再重复创建已存在的容器，则重启已经存在的docker容器
-    5. 如果是第一次创建，直接执行创建容器命令
+
+    函数用法：
+    传入的参数docker_config为一个字典数据类型，该数据对象中必须包含有生成docker容器指令对应
+    的所有数据信息：
+    1. version: 版本号，类型为数字，int和float都可以
+    2. flag: 红绿发布的开关标示，只有两个值是有效的：green或者red
+    3. port: 红绿发布分别对应的端口值，这个在docker配置信息生成函数中有定义:9000或者9001
+    4. root_path: 本次发布生成版本目录的根目录名
     '''
 
     os.system('service docker restart')
@@ -202,8 +195,7 @@ def docker_container(docker_config):
             elif decision.lower() == 'n':
                 print '名为:{container}的docker容器已经存在，不再重复创建。 将重启docker容器...'.format(**docker_config)
                 try:
-                    os.system('docker stop {container}'.format(**docker_config))
-		    os.system('docker start {container}'.format(**docker_config))
+                    os.system('docker restart {container}'.format(**docker_config))
                     print "Docker's READY!"
                 except OSError:
                     print 'Restart docker failed'
@@ -262,7 +254,7 @@ def run():
         print '3. 为本次发布创建工程目录... \n'
         new_folder(docker_config)
         print '4. 准备解压发布war包文件到指定的发布目录... \n'
-        if os.listdir(docker_config['root_path']) is not None:
+        if len(os.listdir(docker_config['root_path'])) is not None:
             print '目标目录不为空，是否要更新发布目录的全部文件？[Y]es or [N]o'
             while True:
                 choice = raw_input('请用字母输入你的决定: (y)是 或者 (n)不 \n >> ')
@@ -294,4 +286,4 @@ def run():
         sys.exit()
 
 
-# run()
+run()
