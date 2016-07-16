@@ -1,0 +1,10 @@
+---
+- config:
+    - testset: "Quickstart authentication test"
+
+- test:
+    - name: "Authentication using basic auth"
+    - url: "/login/"
+    - auth_username: "13320991198"
+    - auth_password: "123456"
+    - expected_status: [200]

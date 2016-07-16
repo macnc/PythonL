@@ -1,11 +1,15 @@
 #!/usr/local/bin/python3
 # _*_coding: utf-8
 
+# Author: suntao
+# Updated: Saturday, July 2, 2016 at 2:26:48 PM
 
 import os
+import sys
 import subprocess
 from time import sleep
 import requests as rq
+import pysftp as sftp
 
 
 # Global variable for appcache of apps
@@ -120,8 +124,71 @@ def run_jetty():
     os.system('sh suntao.sh')
 
 
-# Main function for all workflow.
-def run():
+# Deploy the war file as docker container server in the cloud.
+## Problem: sftp object can not find the file, but the file exists indeed.
+def build_docker():
+    import paramiko
+
+    # Connect to remote host
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect('beta.menpuji.com', username='root', password='dfy!3fxxk%0JSI^s')
+
+    # Setup sftp connection and transmit this script
+    sftp = client.open_sftp()
+    if os.path.exists('dpl.py'):
+        sftp.put(__file__, 'dpl.py')
+        sftp.close()
+    else:
+        print('Plz copy the dpl file first!')
+        sys.exit(1)
+
+    # Run the trasmit script remotely without args and show its output.
+    # SSHClient.exec_command() returns the tuple (stdin, stdout, stderr)
+    stdout = client.exec_command('python /home/mpj/app/dpl.py')[1]
+    for line in stdout:
+        # Process each line in the remote output
+        print(line)
+
+    client.close()
+    sys.exit(0)
+
+
+# Upload the war package file to beta server
+def upload():
+    cmd = "sshpass -p 'dfy!3fxxk%0JSI^s' scp menpuji-webapp/target/menpuji.war root@beta.menpuji.com:/home/mpj/app"
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    stderr, stdout = p.communicate()
+    out = stdout.decode('utf-8')
+    err = stderr.decode('utf-8')
+
+    return p.returncode
+
+    '''
+    # Another solution for upload file to remote server
+    # 另外一种实现从本地上传文件到远程服务器的方式
+    try:
+        s = sftp.Connection(host='beta.menpuji.com', username='root', password='dfy!3fxxk%0JSI^s')
+
+        remotepath = '/home/mpj/app/menpuji.war'
+        localpath = 'menpuji-webapp/target/menpuji.war'
+        s.put(localpath, remotepath)
+
+        s.close()
+
+    except Exception as e:
+        print(str(e))
+    '''
+
+# Login on the remote beta server with zsh shell console available.
+def go2zsh():
+    cmd = "sshpass -p 'dfy!3fxxk%0JSI^s' ssh -t root@beta.menpuji.com 'cd /home/mpj/app ; zsh'"
+    subprocess.call(cmd, shell=True)
+
+
+# Main job function for all workflow.
+def go_launch():
     pid = os.fork()
     if pid == 0:
         run_jetty()
@@ -130,7 +197,7 @@ def run():
     os.system('clear')
     print('2. Start generating appcache file...')
     print('\n' * 5)
-    
+
     # building the appcache file for all of apps
     os.chdir('menpuji-webapp')
     os.system('mvn antrun:run')
@@ -150,28 +217,47 @@ def run():
     os.system('clear')
     print('Jetty stopped!')
     sleep(2)
-    print('\n')
+    os.system('clear')
+
     print("4. Let's delete the old target folder...")
     print('\n')
     FNULL = open(os.devnull, 'w')
-    retcode = subprocess.call(['rm', '-rf', 'target'], stdout=FNULL, stderr=subprocess.STDOUT)
-    print('Retcode is: %d. Then delete process works OK!' % retcode)
-    print('Old target folder has been removed!')
-    print('\n' * 2)
+    prm = subprocess.call(['rm', '-rf', 'target'], stdout=FNULL, stderr=subprocess.STDOUT)
+    if prm == 0:
+        print('Retcode is: %d. Then delete process works OK!' % prm)
+        print('Old target folder has been removed!')
+        sleep(2)
+    else:
+        print('Something goes wrong.')
+
+    os.system('clear')
     print('5. Start packaging the project sourcecode...')
     print('\n')
+    print('Change the work home folder...')
     os.chdir('..')
+
+
+    print('Start packaging all of the project files...')
     os.system('mvn install')
+    sleep(2)
     print('War file build finished!')
     print('\n')
-    choice = input('6. 要上传war包到beta云端吗？ Y/N \n > ')
-    if choice.lower() == 'y':
-        os.system('sh launch.sh')
-    elif choice == 'N':
-        print('自动化打包程序执行完毕！')
-    else:
-        exit()
-    
+    print('We are ready for launch. War file start transmit to remote server!')
+    os.system('clear')
+    print('We are ready for upload the war file.')
+    upload()
+
+    # os.system("sshpass -p 'dfy!3fxxk%0JSI^s' ssh root@beta.menpuji.com:/home/mpj/app")
+
 # Main workflow
-#if __name__ == '__main__':
-#    run() 
+if __name__ == '__main__':
+    print('Welcome to MPJ rocket launch program!')
+    ask = input('Shall we get start? [Y]es or [N]o \n > ')
+    while True:
+        if ask.lower() == 'y' or ask.lower() == 'yes':
+            ch_ver()
+            break
+        else:
+            print('Okay, Bye!')
+            sys.exit(0)
+    go_launch()

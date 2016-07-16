@@ -5,8 +5,8 @@
 # Last updated: Monday, June 27, 2016 at 11:28:11 AM
 
 import shutil
-from os import listdir, remove
-from os.path import isfile, join, exists
+from os import listdir, remove, makedirs
+from os.path import isfile, join, exists, isdir
 import subprocess
 
 
@@ -37,9 +37,11 @@ only_files = [f for f in listdir(download_path) if isfile(join(download_path, f)
 def files(ends_name):
 	return [f for f in only_files if f.endswith(ends_name)]
 
+
 # Create the file lists base on the specific file extended file names.
 # The segment of the code below is defination of the for the work documents.
 sketch_file = files('.sketch')
+dev_file = files('.js') + files('.java')
 word_file = files('.doc') + files('.docx')
 excel_file = files('.xls') + files('.xlsx')
 ppt_file = files('.ppt') + files('.pptx')
@@ -51,7 +53,7 @@ soft_file = files('.dmg')
 mindset_file = files('.xmind')
 pdf_file = files('.pdf')
 dev_file = files('.log') + files('.dat')
-image_file = files('.jpg') + files('.jpeg') + files('.png') + files('.gif') + files('.bmp')
+image_file = files('.JPG') + files('.PNG')  +  files('.jpg') + files('.jpeg') + files('.png') + files('.gif') + files('.bmp')
 
 # Key: destiny path for moving.
 # Value: The list of specific file types.
@@ -65,6 +67,7 @@ file_dict = {
 	ms_path: mindset_file
 }
 
+
 # Create a workflow for handling all of file types
 def move_files(file_list, dest_dir):
 	'''
@@ -73,6 +76,9 @@ def move_files(file_list, dest_dir):
 	3. 该函数中使用了全局变量下载目录的字符串变量：download_path
 	4. 此方法中调用的join(), remove(), exists()方法均引用于os package
 	'''
+	if not isdir(dest_dir):
+		makedirs(dest_dir)
+
 	for file in file_list:
 		src = join(download_path, file)
 		dest = join(dest_dir,file)
@@ -81,8 +87,10 @@ def move_files(file_list, dest_dir):
 		else:
 			shutil.move(src, dest_dir)
 
+
 # Move all of files into their target folder for organization
 # 字典变量的key值(k)为特定文件类型需要移动到的目录位置字符串，file_list列表unhashable.
 # 所以字典变量的Value值(v)为特定文件类型的文件名列表，key值只能为字符串的path地址。
-for k, v in file_dict.items():
-	move_files(v, k)
+if __name__ == '__main__':
+	for k, v in file_dict.items():
+		move_files(v, k)
