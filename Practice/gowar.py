@@ -193,7 +193,7 @@ def go_launch():
     if pid == 0:
         run_jetty()
         exit()
-    sleep(20)
+    sleep(25)
     os.system('clear')
     print('2. Start generating appcache file...')
     print('\n' * 5)
