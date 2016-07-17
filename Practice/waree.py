@@ -209,14 +209,10 @@ def go_launch():
     if pid == 0:
         run_jetty()
         exit()
-<<<<<<< HEAD:Practice/waree.py
     print("1. Please wait 30s for jetty server's ready...")
     wait_time(30)
     print('√' * 66)
     print("Step1. is over! Let's clear the screen for the next step...")
-=======
-    sleep(25)
->>>>>>> 5f668c8a07e6237c320743d29297e4fde5c16a9f:Practice/gowar.py
     os.system('clear')
     print('2. Start generating appcache file...')
     print('\n' * 5)
