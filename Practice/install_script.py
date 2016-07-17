@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+# _*_coding: utf-8
+
+def install_and_import(package):
+    import importlib
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        import pip
+        pip.main(['sudo', 'install', package])
+    finally:
+        globals()[package] = importlib.import_module(package)
+
+
+install_and_import('flask')

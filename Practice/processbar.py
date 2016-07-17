@@ -1,22 +1,28 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python
 # _*_coding: utf-8
 
-
-import time
-import sys
-
-toolbar_width = 40
-
-# Setup toolbar
-sys.stdout.write("[%s]" % (" " * toolbar_width))
-sys.stdout.flush()
-# return to start of line, after '['
-sys.stdout.write("\b" * (toolbar_width + 1))
-
-for i in xrange(toolbar_width):
-    time.sleep(0.1)
-    # Update the toolbar here
-    sys.stdout.write("+")
-    sys.stdout.flush()
-
-sys.stdout.write("\n")
+import sys, time
+ 
+class ProgressBar:
+	def __init__(self, count = 0, total = 0, width = 50):
+		self.count = count
+		self.total = total
+		self.width = width
+	def move(self):
+		self.count += 1
+	def log(self, s):
+		sys.stdout.write(' ' * (self.width + 9) + '\r')
+		sys.stdout.flush()
+		print s
+		progress = self.width * self.count / self.total
+		sys.stdout.write('{0:3}/{1:3}: '.format(self.count, self.total))
+		sys.stdout.write('#' * progress + '-' * (self.width - progress) + '\r')
+		if progress == self.width:
+			sys.stdout.write('\n')
+		sys.stdout.flush()
+ 
+bar = ProgressBar(total = 10)
+for i in range(10):
+	bar.move()
+	bar.log('We have arrived at: ' + str(i + 1))
+	time.sleep(1)

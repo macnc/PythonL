@@ -4,13 +4,30 @@
 # Author: suntao
 # Updated: Saturday, July 2, 2016 at 2:26:48 PM
 
+
+from __future__ import print_function
+import subprocess
 import os
 import sys
-import subprocess
 from time import sleep
-import requests as rq
-import pysftp as sftp
 
+def install(name):
+    subprocess.call(['sudo','pip3', 'install', name])
+
+REQUIREMENTS = ['tqdm', 'requests']
+try:
+    import requests as rq
+    from tqdm import *
+    import subprocess
+except:
+    print('Installing requirements: ' + str(REQUIREMENTS))
+    subprocess.call(['sudo', 'pip3', 'install', '--upgrade', 'pip'])
+    for req in REQUIREMENTS:
+        install(req)
+
+    # Then import again
+    import requests as rq
+    from tqdm import *
 
 # Global variable for appcache of apps
 mpos_appcache = 'src/main/webapp/pos/menpuji.appcache'
@@ -120,9 +137,18 @@ def verify_appcache():
 
 # Start the jettty server.
 def run_jetty():
-    print('1. Start jetty server in about 15s...')
-    os.system('sh suntao.sh')
+    print('1. Start jetty server in about 30s...')
+    cmd = 'sh suntao.sh'
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = p.communicate()
 
+    if stderr:
+        print(stderr)
+    if 'Started Jetty Server' in stdout:
+        print('Jetty is ready for the next step.')
+    else:
+        print('Jetty is not ready yet, wait 10s more for ready...')
+        sleep(10)
 
 # Deploy the war file as docker container server in the cloud.
 ## Problem: sftp object can not find the file, but the file exists indeed.
@@ -160,31 +186,21 @@ def upload():
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     stderr, stdout = p.communicate()
-    out = stdout.decode('utf-8')
-    err = stderr.decode('utf-8')
+    if stderr:
+        print(stderr)
+    print(stdout)
 
     return p.returncode
-
-    '''
-    # Another solution for upload file to remote server
-    # 另外一种实现从本地上传文件到远程服务器的方式
-    try:
-        s = sftp.Connection(host='beta.menpuji.com', username='root', password='dfy!3fxxk%0JSI^s')
-
-        remotepath = '/home/mpj/app/menpuji.war'
-        localpath = 'menpuji-webapp/target/menpuji.war'
-        s.put(localpath, remotepath)
-
-        s.close()
-
-    except Exception as e:
-        print(str(e))
-    '''
 
 # Login on the remote beta server with zsh shell console available.
 def go2zsh():
     cmd = "sshpass -p 'dfy!3fxxk%0JSI^s' ssh -t root@beta.menpuji.com 'cd /home/mpj/app ; zsh'"
     subprocess.call(cmd, shell=True)
+
+
+def wait_time(time_arges):
+    for i in tqdm(range(time_arges)):
+        sleep(1)
 
 
 # Main job function for all workflow.
@@ -193,7 +209,10 @@ def go_launch():
     if pid == 0:
         run_jetty()
         exit()
-    sleep(20)
+    print("1. Please wait 30s for jetty server's ready...")
+    wait_time(30)
+    print('√' * 66)
+    print("Step1. is over! Let's clear the screen for the next step...")
     os.system('clear')
     print('2. Start generating appcache file...')
     print('\n' * 5)
@@ -203,20 +222,21 @@ def go_launch():
     os.system('mvn antrun:run')
     print('\n')
     print('Appcache build finished!')
-    sleep(5)
     os.system('clear')
-    if verify_appcache():
-        print('3. Appcache文件生成有效! 验证程序执行完毕！')
-        print('\n' * 3)
-    else:
-        exit()
-
+    pid = os.fork()
+    if pid == 0:
+        if verify_appcache():
+            print('3. Appcache文件生成有效! 验证程序执行完毕！')
+            print('\n' * 3)
+        else:
+            exit()
+    wait_time(5)
     print("Let's stop jetty server...")
     print('\n')
     os.system('mvn jetty:stop')
     os.system('clear')
     print('Jetty stopped!')
-    sleep(2)
+    wait_time(2)
     os.system('clear')
 
     print("4. Let's delete the old target folder...")
@@ -239,25 +259,26 @@ def go_launch():
 
     print('Start packaging all of the project files...')
     os.system('mvn install')
-    sleep(2)
+    wait_time(2)
     print('War file build finished!')
     print('\n')
     print('We are ready for launch. War file start transmit to remote server!')
     os.system('clear')
     print('We are ready for upload the war file.')
-    upload()
+    up_f = upload()
+    print('The result of upload file is {}'.format(up_f))
 
     # os.system("sshpass -p 'dfy!3fxxk%0JSI^s' ssh root@beta.menpuji.com:/home/mpj/app")
 
 # Main workflow
-if __name__ == '__main__':
-    print('Welcome to MPJ rocket launch program!')
-    ask = input('Shall we get start? [Y]es or [N]o \n > ')
-    while True:
-        if ask.lower() == 'y' or ask.lower() == 'yes':
-            ch_ver()
-            break
-        else:
-            print('Okay, Bye!')
-            sys.exit(0)
-    go_launch()
+# if __name__ == '__main__':
+#    print('Welcome to MPJ rocket launch program!')
+#    ask = input('Shall we get start? [Y]es or [N]o \n > ')
+#    while True:
+#        if ask.lower() == 'y' or ask.lower() == 'yes':
+#            ch_ver()
+#            break
+#        else:
+#            print('Okay, Bye!')
+#            sys.exit(0)
+#    go_launch()
