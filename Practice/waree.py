@@ -11,8 +11,10 @@ import os
 import sys
 from time import sleep
 
+
 def install(name):
-    subprocess.call(['sudo','pip3', 'install', name])
+    subprocess.call(['sudo', 'pip3', 'install', name])
+
 
 REQUIREMENTS = ['tqdm', 'requests']
 try:
@@ -49,7 +51,7 @@ def wr_file(file_list):
     ver_no = input('Plz enter the version number. > ')
     for file in file_list:
         with open(file, 'w') as data:
-            data.write('{\n    version: %s \n}' % ver_no )
+            data.write('{\n    version: %s \n}' % ver_no)
             print('File change completed!')
 
 
@@ -144,14 +146,15 @@ def run_jetty():
 
     if stderr:
         print(stderr)
-    if 'Started Jetty Server' in stdout:
+    if 'Started Jetty Server' in str(stdout):
         print('Jetty is ready for the next step.')
     else:
         print('Jetty is not ready yet, wait 10s more for ready...')
         sleep(10)
 
+
 # Deploy the war file as docker container server in the cloud.
-## Problem: sftp object can not find the file, but the file exists indeed.
+# Problem: sftp object can not find the file, but the file exists indeed.
 def build_docker():
     import paramiko
 
@@ -192,6 +195,7 @@ def upload():
 
     return p.returncode
 
+
 # Login on the remote beta server with zsh shell console available.
 def go2zsh():
     cmd = "sshpass -p 'dfy!3fxxk%0JSI^s' ssh -t root@beta.menpuji.com 'cd /home/mpj/app ; zsh'"
@@ -223,13 +227,9 @@ def go_launch():
     print('\n')
     print('Appcache build finished!')
     os.system('clear')
-    pid = os.fork()
-    if pid == 0:
-        if verify_appcache():
-            print('3. Appcache文件生成有效! 验证程序执行完毕！')
-            print('\n' * 3)
-        else:
-            exit()
+    print('')
+    if verify_appcache():
+        print('3. Appcache文件生成有效! 验证程序执行完毕！')
     wait_time(5)
     print("Let's stop jetty server...")
     print('\n')
@@ -256,7 +256,6 @@ def go_launch():
     print('Change the work home folder...')
     os.chdir('..')
 
-
     print('Start packaging all of the project files...')
     os.system('mvn install')
     wait_time(2)
@@ -268,17 +267,16 @@ def go_launch():
     up_f = upload()
     print('The result of upload file is {}'.format(up_f))
 
-    # os.system("sshpass -p 'dfy!3fxxk%0JSI^s' ssh root@beta.menpuji.com:/home/mpj/app")
 
 # Main workflow
-# if __name__ == '__main__':
-#    print('Welcome to MPJ rocket launch program!')
-#    ask = input('Shall we get start? [Y]es or [N]o \n > ')
-#    while True:
-#        if ask.lower() == 'y' or ask.lower() == 'yes':
-#            ch_ver()
-#            break
-#        else:
-#            print('Okay, Bye!')
-#            sys.exit(0)
-#    go_launch()
+if __name__ == '__main__':
+    print('Welcome to MPJ rocket launch program!')
+    ask = input('Shall we get start? [Y]es or [N]o \n > ')
+    while True:
+        if ask.lower() == 'y' or ask.lower() == 'yes':
+            ch_ver()
+            break
+        else:
+            print('Okay, Bye!')
+            sys.exit(0)
+    go_launch()
