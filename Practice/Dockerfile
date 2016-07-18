@@ -29,7 +29,7 @@ RUN wget http://apache.fayea.com/tomcat/tomcat-6/v6.0.45/bin/apache-tomcat-6.0.4
 RUN chmod +x ${CATALINA_HOME}/bin/*sh
 
 # Create menpuji sub-folder for the project
-RUN mkdir -p /opt/tomcat/menpuji
+RUN mkdir -p /opt/tomcat/webapp/menpuji
 
 # Create Tomcat admin user
 ADD create_admin_user.sh $CATALINA_HOME/scripts/create_admin_user.sh
