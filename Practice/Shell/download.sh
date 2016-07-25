@@ -2,4 +2,4 @@
 # _*_coding: utf-8
 
 
-sshpass -p 'dfy!3fxxk%0JSI^s' scp root@beta.menpuji.com:/home/mpj/app/dpl.py ./
+sshpass -p 'YjJt0aqba6CU!56EDfiGXk$4BsDJ#9Kt' scp root@beta.menpuji.com:/home/mpj/app/dpl.py ../Python/

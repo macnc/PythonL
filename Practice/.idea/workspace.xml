@@ -2,28 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46a04fcd-aeeb-4854-8ad2-edd74277a7ff" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Dockerfile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/charset.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/check_process.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/clean.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cnn.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dc.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/download.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dpl.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/finput.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/import_modules.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/install_script.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mpj_test.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/multitask.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mv_file.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/op_charset.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/processbar.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pysftp.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quicksort.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/search.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/time_bar.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/upload.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/waree.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/cnn.sh" afterPath="$PROJECT_DIR$/Shell/cnn.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/download.sh" afterPath="$PROJECT_DIR$/Shell/download.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/upload.sh" afterPath="$PROJECT_DIR$/Shell/upload.sh" />
     </list>
     <ignored path="Practice.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +23,38 @@
     <favorites_list name="Practice" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="cnn.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shell/cnn.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="download.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shell/download.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="4" column="103" selection-start-line="4" selection-start-column="103" selection-end-line="4" selection-end-column="103" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="upload.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Shell/upload.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -63,6 +75,9 @@
         <option value="$PROJECT_DIR$/processbar.py" />
         <option value="$PROJECT_DIR$/pysftp.py" />
         <option value="$PROJECT_DIR$/waree.py" />
+        <option value="$PROJECT_DIR$/Shell/cnn.sh" />
+        <option value="$PROJECT_DIR$/Shell/download.sh" />
+        <option value="$PROJECT_DIR$/Shell/upload.sh" />
       </list>
     </option>
   </component>
@@ -133,6 +148,10 @@
               <option name="myItemId" value="Practice" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -145,6 +164,16 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Practice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Practice" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -365,6 +394,9 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.sh" />
+  </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
       <collection />
@@ -534,6 +566,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shell/cnn.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shell/download.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="103" selection-start-line="4" selection-start-column="103" selection-end-line="4" selection-end-column="103" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shell/upload.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
