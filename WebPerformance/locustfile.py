@@ -1,16 +1,21 @@
 #!/usr/local/bin/python
 # _*_coding: utf-8
 
-from locust import Locust, TaskSet, task
+from locust import HttpLocust, TaskSet, task
 
 
-class MyTaskSet(TaskSet):
-	@task
-	def my_task(self):
-		print "The my_task function in class My_Tesk_Set."
-		
-		
-class MyLocust(Locust):
-	task_set = MyTaskSet
+class Performance(TaskSet):
+	@task(5)
+	def inventories(self):
+		self.client.get('/api/stores/demostore/inventories')
+
+	@task(5)
+	def updates(self):
+		self.client.get('/api/stores/demostore/updates/20160720114746000')
+
+
+class MyLocust(HttpLocust):
+	task_set = Performance
+	host = "http://172.16.255.135:8000/"
 	min_wait = 5000
 	max_wait = 15000
