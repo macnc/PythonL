@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46a04fcd-aeeb-4854-8ad2-edd74277a7ff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/cnn.sh" afterPath="$PROJECT_DIR$/Shell/cnn.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/download.sh" afterPath="$PROJECT_DIR$/Shell/download.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shell/upload.sh" afterPath="$PROJECT_DIR$/Shell/upload.sh" />
-    </list>
+    <list default="true" id="46a04fcd-aeeb-4854-8ad2-edd74277a7ff" name="Default" comment="" />
     <ignored path="Practice.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
