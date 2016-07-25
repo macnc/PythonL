@@ -2,7 +2,7 @@
 # _*_coding: utf-8
 
 # Author: suntao
-# Updated: Saturday, July 2, 2016 at 2:26:48 PM
+# Updated: Friday, July 22, 2016 at 1:50:16 PM
 
 
 from __future__ import print_function
@@ -13,7 +13,18 @@ from time import sleep
 
 
 def install(name):
-    subprocess.call(['sudo', 'pip3', 'install', name])
+    if isinstance(name, str):
+        subprocess.call(['sudo', 'pip3', 'install', name])
+    elif isinstance(name, list):
+        for i in name:
+            if isinstance(i, str):
+                subprocess.call(['sudo', 'pip3', 'install', i])
+            else:
+                raise SystemExit("非字符串参数，请安装包名称的合法性和正确性！")
+
+    else:
+        raise SystemExit('安装包的名称不是字符串，请检查下！')
+
 
 
 REQUIREMENTS = ['tqdm', 'requests']
@@ -30,6 +41,17 @@ except:
     # Then import again
     import requests as rq
     from tqdm import *
+
+
+def run_env_build():
+    pip_out = subprocess.check_output(['pip', 'list'])
+    package_installed = pip_out.decode('utf-8')
+    for pg in REQUIREMENTS:
+        if pg not in package_installed.split('\n'):
+            install(pg)
+        else:
+            pass
+
 
 # Global variable for appcache of apps
 mpos_appcache = 'src/main/webapp/pos/menpuji.appcache'
@@ -115,7 +137,7 @@ def test():
         print('Jetty is available.')
         return True
     else:
-        print('Someting goes wrong.')
+        print('Something goes wrong.')
         return False
 
 
@@ -172,8 +194,6 @@ def build_docker():
         print('Plz copy the dpl file first!')
         sys.exit(1)
 
-    # Run the trasmit script remotely without args and show its output.
-    # SSHClient.exec_command() returns the tuple (stdin, stdout, stderr)
     stdout = client.exec_command('python /home/mpj/app/dpl.py')[1]
     for line in stdout:
         # Process each line in the remote output
@@ -215,14 +235,13 @@ def go_launch():
         exit()
     print("1. Please wait 30s for jetty server's ready...")
     wait_time(30)
+    sleep(2)
     print('√' * 66)
     print("Step1. is over! Let's clear the screen for the next step...")
     os.system('clear')
     print('2. Start generating appcache file...')
-    print('\n' * 5)
 
-    # building the appcache file for all of apps
-    os.chdir('menpuji-webapp')
+    os.chdir('menpuji-webapp') # building the appcache file for all of apps
     os.system('mvn antrun:run')
     print('\n')
     print('Appcache build finished!')
@@ -231,12 +250,14 @@ def go_launch():
     if verify_appcache():
         print('3. Appcache文件生成有效! 验证程序执行完毕！')
     wait_time(5)
+    sleep(2)
     print("Let's stop jetty server...")
     print('\n')
     os.system('mvn jetty:stop')
     os.system('clear')
     print('Jetty stopped!')
     wait_time(2)
+    sleep(2)
     os.system('clear')
 
     print("4. Let's delete the old target folder...")
@@ -260,17 +281,26 @@ def go_launch():
     os.system('mvn install')
     wait_time(2)
     print('War file build finished!')
-    print('\n')
     print('We are ready for launch. War file start transmit to remote server!')
     os.system('clear')
     print('We are ready for upload the war file.')
-    up_f = upload()
-    print('The result of upload file is {}'.format(up_f))
+    dp = input('要上传到云端服务器启动部署吗？ \n > ')
+    if dp.lower() == 'y':
+        up_f = upload()
+        print('The result of upload file is {}'.format(up_f))
+    else:
+        print('Nothing to do for this option. Bye!')
+    print('自动打包流程已经结束，程序退出.')
+    sys.exit()
 
 
 # Main workflow
 if __name__ == '__main__':
     print('Welcome to MPJ rocket launch program!')
+    print('开始检查Python运行环境是否合格...')
+    run_env_build()
+    print('准备就绪，即将开始打包程序！')
+    sleep(1)
     ask = input('Shall we get start? [Y]es or [N]o \n > ')
     while True:
         if ask.lower() == 'y' or ask.lower() == 'yes':
