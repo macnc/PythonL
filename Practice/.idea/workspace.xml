@@ -2,8 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46a04fcd-aeeb-4854-8ad2-edd74277a7ff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/waree.py" afterPath="$PROJECT_DIR$/waree.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Dockerfile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/charset.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/check_process.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/clean.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cnn.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dc.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/download.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dpl.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/finput.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/import_modules.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/install_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mpj_test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/multitask.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mv_file.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/op_charset.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/processbar.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pysftp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/quicksort.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/search.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/time_bar.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/upload.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/waree.py" afterPath="" />
     </list>
     <ignored path="Practice.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,6 +131,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Practice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Practice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Practice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Python" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -350,11 +384,6 @@
           <line>8</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/dpl.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="6" />
     </breakpoint-manager>
@@ -441,9 +470,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#48#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -451,9 +478,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#48#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -461,9 +486,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#48#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -479,9 +502,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-352">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#48#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
