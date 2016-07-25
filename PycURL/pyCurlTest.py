@@ -30,10 +30,9 @@ def test_gzip(input_url):
     http_size = c.getinfo(pycurl.SIZE_DOWNLOAD)
 
     # print 'http_code http_size http_conn_time http_tran http_start_tran http_tran_total_time'
-    print '_' * 68
-    print "%d  |  %d  |  %f  |  %f  |  %f  |  %f " % (http_code, http_size, http_conn_time,
-                                                                          http_pre_tran, http_start_tran, http_total_time)
-    print '_' * 68
+    print('_' * 68)
+    print("%d  |  %d  |  %f  |  %f  |  %f  |  %f " % (http_code, http_size, http_conn_time, http_pre_tran, http_start_tran, http_total_time))
+    print('_' * 68)
 
 
 if __name__ == '__main__':
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     test_time = int(sys.argv[2])
 
     if test_time is None:
-        print "测试次数为空, 如果需要多次测试, 请输入测试次数."
+        print("测试次数为空, 如果需要多次测试, 请输入测试次数.")
         test_gzip(input_url)
     else:
         for i in range(0, test_time):
