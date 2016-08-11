@@ -54,6 +54,7 @@ def run_env_build():
 
 
 # Global variable for appcache of apps
+work_dir = '/Users/suntao/Documents/MPJ/menpuji'
 mpos_appcache = 'src/main/webapp/pos/menpuji.appcache'
 moffice_appcache = 'src/main/webapp/office/menpuji.appcache'
 mclerk_appcache = 'src/main/webapp/clerk/menpuji.appcache'

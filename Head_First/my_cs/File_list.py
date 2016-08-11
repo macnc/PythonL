@@ -5,8 +5,14 @@ Created on Wed May 25 11:31:45 2016
 @author: suntao
 """
 
-import os
-for root, dirs, files in os.walk("../"):
-    for file in files:
-        if file.endswith(""):
-             print(os.path.join(root, file))
+f2()
+
+def f2():
+    print("I am a wrap function.")
+    f1()
+    print('Finish with invoking...')
+   
+
+def f1():
+    print('I am a function!')
+    
