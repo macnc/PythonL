@@ -125,7 +125,7 @@ def ch_ver():
             wr_file(options['7'])
             break
         elif choose == '8':
-            pass
+            break
         else:
             print('Invalid input, plz choose the right number:')
             continue
@@ -181,8 +181,7 @@ def run_jetty():
 def build_docker():
     import paramiko
 
-    # Connect to remote host
-    client = paramiko.SSHClient()
+
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect('beta.menpuji.com', username='root', password='dfy!3fxxk%0JSI^s')
 
