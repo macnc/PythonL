@@ -56,7 +56,7 @@ def docker():
             docker_config['port'] = 9000
             break
         else:
-            print '请输入英文字母(R)或者(G)，其他值都不被接受!!!'
+            print '请输入英文字母(R)或者(G)，其他值都不被接受!'
             continue
     docker_config['root_path'] = 'mAPP-docker-v{version}'.format(**docker_config)
     docker_config['container'] = 'mpj-V{version}-{flag}'.format(**docker_config)
@@ -286,4 +286,5 @@ def run():
         sys.exit()
 
 
-run()
+if __name__ == '__main__':
+    run()
