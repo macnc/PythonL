@@ -1,22 +1,27 @@
-#!/usr/bin/
-# _*_coding: utf-8
+#!/usr/local/Cellar/python/2.7.13/bin/python
+# -*- coding: utf-8 -*-
 
+
+# Inclue the fuction argv for argument accept from stand terminal
 from sys import argv
 
-# 第一个Script参数具体是干嘛的?
+# script name and file name will inputed from terminal
 script, filename = argv
-
-# 将文件内容打开负值给txt
+# Sep up a variable for open the file. Actually it's a file object
 txt = open(filename)
 
-# 分别打印出文件名称和文件内容, txt可能通过这种赋值的方式转化为一个文本文件对象,可以调用框架的read()方法
-print "Here is your file %r:" % filename
+# print out the file name you need to open.
+print "Here's your file %r:" % filename
+# print out the cotent of the file.
 print txt.read()
+txt.close()
 
-# Once again.
+# print out a open file tip message
 print "Type the filename again:"
-file_again = raw_input(">")
-
+# accept a filename from prompt input
+file_again = raw_input("> ")
+# set up another variable for open this file.
 txt_again = open(file_again)
-
+# print out the content of another file.
 print txt_again.read()
+txt_again.close()

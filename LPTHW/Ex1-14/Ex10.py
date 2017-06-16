@@ -1,14 +1,13 @@
-#!/usr/bin/
-# _*_coding: utf-8
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
 
-import os,sys
+"I am 6'2\" tall."  # escape double-quote inside string
+'I am 6\2" tall.'  # escape single-quote inside string
 
-# 反斜杠是一个转换符，用于在字符串中添加特殊字符的一种转换形式。
 tabby_cat = "\tI'm tabbed in."
-persian_cat = "\tI'm split \non a line."
-backslash_cat = "I'm \\ a \\ cat"
+persian_cat = "I'm split\non a line."
+blackslash_cat = "I'm \\ a \\ cat."
 
-# \t就是一个tab缩进符
 fat_cat = """
 I'll do a list:
 \t* Cat food
@@ -16,8 +15,16 @@ I'll do a list:
 \t* Catnip\n\t* Grass
 """
 
+bad_ketty = '''
+Hey I am niniwa, here are my rules:
+\t* No smoking in the house
+\t* No mass in the house
+\t* Talk to me when I am available
+\t* Give a bug hug when I am sad.
+'''
+
 print tabby_cat
 print persian_cat
-print backslash_cat
+print blackslash_cat
 print fat_cat
-
+print bad_ketty

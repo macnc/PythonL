@@ -1,13 +1,16 @@
 #!/usr/bin/
 # _*_coding: utf-8
 
-import sys,os
 
-print "Mary has a little lamb."
-print "Its fleece was white as %s" % 'snow'
-print "An everywhere that Mary want."
-print "." * 10 # what'd that do?
+# print out a string line with or without variables embedded
+print "Mary had a little lamb."
+print "Its fleece was white as %s." % 'snow'
+print "And everywhere that Mary went."
 
+# print a dot line with 10 dots.
+print "." * 10  # what'd that do?
+
+# Define 12 variables and set the value with one signle characters
 end1 = "C"
 end2 = "h"
 end3 = "e"
@@ -21,6 +24,6 @@ end10 = "g"
 end11 = "e"
 end12 = "r"
 
-# Watch that comma at the end. Try removing it to see what happens
+# watch that comma at the end. try removing it to see what happens
 print end1 + end2 + end3 + end4 + end5 + end6,
 print end7 + end8 + end9 + end10 + end11 + end12

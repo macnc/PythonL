@@ -1,10 +1,10 @@
 #!/usr/bin/
-# _*_coding: utf-8
+# -*- coding: utf-8 -*-
 
-import sys,os
+name = raw_input("Name? ")
+age = raw_input("How old are you?\n")
+weight = raw_input("How much do you weight?\n")
+height = raw_input("How tall are you?\n")
 
-age = raw_input("How old are you?")
-height = raw_input("How tall are you?")
-Weight = raw_input("How much do you weight?")
-
-print "So you are %r old, %r tall and %r heavy."
+print "So, your name is %s, and you're %r years old, %r meters tall and %r \
+    kgs heavy." % (name, int(age), int(height), int(weight))
