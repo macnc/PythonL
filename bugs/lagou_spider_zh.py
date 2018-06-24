@@ -65,8 +65,8 @@ def get_data(city, title, headers):
     # 爬虫多有数据存储变量
     lagou_data = []
 
-    pages = get_pages(city, title, headers)[1]
-    total_items = get_pages(city, title, headers)[0]
+    pages = get_pages(city=city, title=title, headers=headers)[1]
+    total_items = get_pages(city=city, title=title, headers=headers)[0]
     # print("1. 第一阶段开始 ---> 从网络获取数据...")
     print("在{0}与{1}相关的职位数据有{2}条。".format(city, title, total_items))
     print("此次爬虫程序总共要用{0}次循环来完成数据抓取...".format(pages))
@@ -131,7 +131,8 @@ def writeExcel(ws, job, row=0, positionID='职位ID', positionName='职位名称
         ws.write(row, 12, createTime)
     else:
         ws.write(row, 0, job['positionId'])
-        ws.write(row, 1, job['positionName'])
+        ws.write_url(row, 1, 'https://www.lagou.com/jobs/%d.html' \
+                     % job['positionId'], string=job['positionName'])
         ws.write(row, 2, job['salary'])
         ws.write(row, 3, job['industryField'])
         ws.write(row, 4, job['financeStage'])
