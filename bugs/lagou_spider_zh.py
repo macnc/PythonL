@@ -2,7 +2,6 @@ import requests
 import json
 import os
 import sys
-import pprint
 from datetime import *
 from xlsxwriter import *
 from time import sleep
@@ -28,7 +27,8 @@ start_point = datetime.now()
 
 #这里的header和上面的不同，大家试试看删掉一些还能不能获取数据
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11",
+    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 \
+    (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11",
     "DNT": "1",
     "Host": "www.lagou.com",
     "Origin": "https://www.lagou.com",
@@ -43,8 +43,10 @@ headers = {
 def get_pages(city, title, headers):
     ajax_url = 'https://www.lagou.com/jobs/positionAjax.json?city={0}'.format(city)
     post_param = {"first": "false", "pn": 1, "kd": title}
-    r = requests.post(ajax_url, headers=headers, data=post_param, verify=True)
+    r = requests.post(url=ajax_url, headers=headers, data=post_param, verify=True)
     total_items = 0
+    pages = 0
+
     if "content" in json.loads(r.text):
         total_items = json.loads(r.text)['content']['positionResult']['totalCount']
         # 计算分页数，分偶数和奇数两种情况
@@ -64,6 +66,8 @@ def get_data(city, title, headers):
 
     # 爬虫多有数据存储变量
     lagou_data = []
+    pages = 0
+    total_items = 0
 
     pages = get_pages(city=city, title=title, headers=headers)[1]
     total_items = get_pages(city=city, title=title, headers=headers)[0]
@@ -109,16 +113,13 @@ def get_data(city, title, headers):
 
 
 # 写数据到Excel表中的函数
-def writeExcel(ws, job, row=0, positionID='职位ID', positionName='职位名称', \
-               salary='薪水', industryField='所在行业', financeStage='发展阶段', \
-               workYear='工作经验', education='学历', firstType='职位大类', \
-               city='所在城市', companySize='公司规模', companyFullName='公司全名', \
-               fromCreateTime='发布天数', createTime='发布时间'):
-
+def writeExcel(ws, job=None, row=0, positionID='职位ID', positionName='职位名称', companyFullName='公司全名',  \
+               industryField='所在行业', financeStage='发展阶段', workYear='工作经验', education='学历', firstType='职位大类', \
+               city='所在城市', companySize='公司规模', salary='薪水',fromCreateTime='发布天数', createTime='发布时间'):
     if row == 0:
         ws.write(row, 0, positionID)
         ws.write(row, 1, positionName)
-        ws.write(row, 2, salary)
+        ws.write(row, 2, companyFullName)
         ws.write(row, 3, industryField)
         ws.write(row, 4, financeStage)
         ws.write(row, 5, workYear)
@@ -126,14 +127,14 @@ def writeExcel(ws, job, row=0, positionID='职位ID', positionName='职位名称
         ws.write(row, 7, firstType)
         ws.write(row, 8, city)
         ws.write(row, 9, companySize)
-        ws.write(row, 10, companyFullName)
+        ws.write(row, 10, salary)
         ws.write(row, 11, fromCreateTime)
         ws.write(row, 12, createTime)
     else:
         ws.write(row, 0, job['positionId'])
         ws.write_url(row, 1, 'https://www.lagou.com/jobs/%d.html' \
                      % job['positionId'], string=job['positionName'])
-        ws.write(row, 2, job['salary'])
+        ws.write(row, 2, job['companyFullName'])
         ws.write(row, 3, job['industryField'])
         ws.write(row, 4, job['financeStage'])
         ws.write(row, 5, job['workYear'])
@@ -141,7 +142,7 @@ def writeExcel(ws, job, row=0, positionID='职位ID', positionName='职位名称
         ws.write(row, 7, job['firstType'])
         ws.write(row, 8, job['city'])
         ws.write(row, 9, job['companySize'])
-        ws.write(row, 10, job['companyFullName'])
+        ws.write(row, 10, job['salary'])
         ws.write(row, 11, job['formatCreateTime'])
         ws.write(row, 12, job['createTime'])
 
@@ -150,11 +151,50 @@ def writeExcel(ws, job, row=0, positionID='职位ID', positionName='职位名称
 def save_Excel(data_file, file_name, sheet_name):
     # 创建第一个表格
     wb = Workbook(file_name)
+
     # 为表格文件创建一个工作表
     ws = wb.add_worksheet(sheet_name)
+
+    # 定义表格的样式和行、列的规格
+    # 设置列的规格，各个数据的宽度都不一样，需要单独配置
+    ws.set_column('A:A', 8)
+    ws.set_column('B:B', 15)
+    ws.set_column('C:C', 35)
+    ws.set_column('D:D', 22)
+    ws.set_column('E:E', 12)
+    ws.set_column('F:F', 10)
+    ws.set_column('G:G', 10)
+    ws.set_column('H:H', 10)
+    ws.set_column('I:I', 10)
+    ws.set_column('J:J', 13)
+    ws.set_column('K:K', 9)
+    ws.set_column('L:L', 12)
+    ws.set_column('M:M', 22)
+
+    # 设置正文数据格式：字体，对齐，字体大小和行高
+    cell_format = wb.add_format()
+    cell_format.set_align('left')
+    cell_format.set_font_name('冬青黑体简体中文')
+    cell_format.set_font_size(12)
+    for i in range(1, 5000):
+        ws.set_row(i, 20, cell_format)
+
+    # 设置首行为标题，文本加粗, 字体为：冬青黑体简体中文, 数据竖直居中左对齐，字号为：22
+    titel_format = wb.add_format()
+    titel_format.set_bold(bold=True)
+    titel_format.set_font_size(14)
+    titel_format.set_font_name('冬青黑体简体中文')
+    titel_format.set_align('left')
+    ws.set_row(0, 22, titel_format)
+
+
+    # 开始写数据到Excel文件中
     print("开始写数据到Excel表格中...")
     for i in range(len(data_file)):
-        writeExcel(ws, data_file[i], i)
+        if i == 0:
+            writeExcel(ws, job=None, row=0)
+        else:
+            writeExcel(ws, data_file[i-1], i)
 
     # 关闭文件流
     wb.close()
