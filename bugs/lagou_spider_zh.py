@@ -157,7 +157,7 @@ def save_Excel(data_file, file_name, sheet_name):
 
     # 定义表格的样式和行、列的规格
     # 设置列的规格，各个数据的宽度都不一样，需要单独配置
-    ws.set_column('A:A', 8)
+    ws.set_column('A:A', 11)
     ws.set_column('B:B', 15)
     ws.set_column('C:C', 35)
     ws.set_column('D:D', 22)
