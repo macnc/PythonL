@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c50df9ce-ca5d-4071-b157-f31682ff02de" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/suntao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bugs/lagou_spider_zh.py" beforeDir="false" afterPath="$PROJECT_DIR$/bugs/lagou_spider_zh.py" afterDir="false" />
     </list>
@@ -20,7 +19,7 @@
     <SUITE FILE_PATH="coverage/PythonL$grade.coverage" NAME="grade Coverage Results" MODIFIED="1469978930919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ThinkPython/demo_code" />
     <SUITE FILE_PATH="coverage/PythonL$polygon.coverage" NAME="polygon Coverage Results" MODIFIED="1470496401080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ThinkPython/demo_code" />
     <SUITE FILE_PATH="coverage/PythonL$L1.coverage" NAME="L1 Coverage Results" MODIFIED="1451476385800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LPTHW" />
-    <SUITE FILE_PATH="coverage/PythonL$Python_3.coverage" NAME="Python 3 Coverage Results" MODIFIED="1529929706422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bugs" />
+    <SUITE FILE_PATH="coverage/PythonL$Python_3.coverage" NAME="Python 3 Coverage Results" MODIFIED="1529944720491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bugs" />
     <SUITE FILE_PATH="coverage/PythonL$tem2.coverage" NAME="tem2 Coverage Results" MODIFIED="1470495106786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ThinkPython/exercise" />
     <SUITE FILE_PATH="coverage/PythonL$file_io.coverage" NAME="file_io Coverage Results" MODIFIED="1471359431337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TreeHouse/Practice" />
     <SUITE FILE_PATH="coverage/PythonL$flower.coverage" NAME="flower Coverage Results" MODIFIED="1470496413383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ThinkPython/demo_code" />
@@ -51,11 +50,10 @@
       <file leaf-file-name="lagou_spider_zh.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bugs/lagou_spider_zh.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="176" column="41" lean-forward="true" selection-start-line="176" selection-start-column="41" selection-end-line="176" selection-end-column="41" />
+            <state relative-caret-position="559">
+              <caret line="127" column="38" lean-forward="true" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#5691#5855#0" />
               </folding>
             </state>
           </provider>
@@ -383,6 +381,9 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -422,14 +423,14 @@
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32713756" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32806692" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36431226" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36431226" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.31505576" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4972119" weight="0.16134185" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32960597" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32899627" />
       <window_info anchor="right" auto_hide="true" id="SciView" show_stripe_button="false" type="FLOATING" />
-      <window_info id="Structure" order="1" sideWeight="0.5027881" side_tool="true" visible="true" weight="0.16134185" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5027881" side_tool="true" visible="true" weight="0.29499468" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32960597" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.47636816" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -814,11 +815,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bugs/lagou_spider_zh.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="176" column="41" lean-forward="true" selection-start-line="176" selection-start-column="41" selection-end-line="176" selection-end-column="41" />
+        <state relative-caret-position="559">
+          <caret line="127" column="38" lean-forward="true" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#5691#5855#0" />
           </folding>
         </state>
       </provider>

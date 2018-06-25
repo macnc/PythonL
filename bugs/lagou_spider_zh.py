@@ -1,3 +1,6 @@
+# /Users/suntao/anaconda3/bin/python
+#! -*- coding: utf-8 -*-
+
 import requests
 import json
 import os
@@ -113,21 +116,21 @@ def get_data(city, title, headers):
 
 
 # 写数据到Excel表中的函数
-def writeExcel(ws, job=None, row=0, positionID='职位ID', positionName='职位名称', companyFullName='公司全名',  \
-               industryField='所在行业', financeStage='发展阶段', workYear='工作经验', education='学历', firstType='职位大类', \
-               city='所在城市', companySize='公司规模', salary='薪水',fromCreateTime='发布天数', createTime='发布时间'):
+def writeExcel(ws, job=None, row=0, positionID='职位ID', positionName='职位名称', companyFullName='公司全名', salary='薪水',\
+               industryField='所在行业', financeStage='发展阶段', workYear='工作经验', education='学历', firstType='职位大类',\
+               city='所在城市', companySize='公司规模', fromCreateTime='发布天数', createTime='发布时间'):
     if row == 0:
         ws.write(row, 0, positionID)
         ws.write(row, 1, positionName)
         ws.write(row, 2, companyFullName)
-        ws.write(row, 3, industryField)
-        ws.write(row, 4, financeStage)
-        ws.write(row, 5, workYear)
-        ws.write(row, 6, education)
-        ws.write(row, 7, firstType)
-        ws.write(row, 8, city)
-        ws.write(row, 9, companySize)
-        ws.write(row, 10, salary)
+        ws.write(row, 3, salary)
+        ws.write(row, 4, industryField)
+        ws.write(row, 5, financeStage)
+        ws.write(row, 6, workYear)
+        ws.write(row, 7, education)
+        ws.write(row, 8, firstType)
+        ws.write(row, 9, city)
+        ws.write(row, 10, companySize)
         ws.write(row, 11, fromCreateTime)
         ws.write(row, 12, createTime)
     else:
@@ -135,14 +138,14 @@ def writeExcel(ws, job=None, row=0, positionID='职位ID', positionName='职位�
         ws.write_url(row, 1, 'https://www.lagou.com/jobs/%d.html' \
                      % job['positionId'], string=job['positionName'])
         ws.write(row, 2, job['companyFullName'])
-        ws.write(row, 3, job['industryField'])
-        ws.write(row, 4, job['financeStage'])
-        ws.write(row, 5, job['workYear'])
-        ws.write(row, 6, job['education'])
-        ws.write(row, 7, job['firstType'])
-        ws.write(row, 8, job['city'])
-        ws.write(row, 9, job['companySize'])
-        ws.write(row, 10, job['salary'])
+        ws.write(row, 3, job['salary'])
+        ws.write(row, 4, job['industryField'])
+        ws.write(row, 5, job['financeStage'])
+        ws.write(row, 6, job['workYear'])
+        ws.write(row, 7, job['education'])
+        ws.write(row, 8, job['firstType'])
+        ws.write(row, 9, job['city'])
+        ws.write(row, 10, job['companySize'])
         ws.write(row, 11, job['formatCreateTime'])
         ws.write(row, 12, job['createTime'])
 
@@ -155,26 +158,34 @@ def save_Excel(data_file, file_name, sheet_name):
     # 为表格文件创建一个工作表
     ws = wb.add_worksheet(sheet_name)
 
-    # 定义表格的样式和行、列的规格
-    # 设置列的规格，各个数据的宽度都不一样，需要单独配置
-    ws.set_column('A:A', 11)
+    # 开始写数据到Excel文件中
+    print("开始写数据到Excel表格中...")
+    for i in range(len(data_file)):
+        if i == 0:
+            writeExcel(ws, job=None, row=0)
+        else:
+            writeExcel(ws, data_file[i-1], i)
+
+        # 定义表格的样式和行、列的规格
+        # 设置列的规格，各个数据的宽度都不一样，需要单独配置
+    ws.set_column('A:A', 10.5)
     ws.set_column('B:B', 15)
     ws.set_column('C:C', 35)
-    ws.set_column('D:D', 22)
-    ws.set_column('E:E', 12)
-    ws.set_column('F:F', 10)
+    ws.set_column('D:D', 9)
+    ws.set_column('E:E', 22)
+    ws.set_column('F:F', 12)
     ws.set_column('G:G', 10)
-    ws.set_column('H:H', 10)
-    ws.set_column('I:I', 10)
-    ws.set_column('J:J', 13)
-    ws.set_column('K:K', 9)
+    ws.set_column('H:H', 7)
+    ws.set_column('I:I', 17)
+    ws.set_column('J:J', 10)
+    ws.set_column('K:K', 13)
     ws.set_column('L:L', 12)
     ws.set_column('M:M', 22)
 
     # 设置正文数据格式：字体，对齐，字体大小和行高
     cell_format = wb.add_format()
     cell_format.set_align('left')
-    cell_format.set_font_name('冬青黑体简体中文')
+    cell_format.set_font_name(u'冬青黑体简体中文')
     cell_format.set_font_size(12)
     for i in range(1, 5000):
         ws.set_row(i, 20, cell_format)
@@ -183,18 +194,10 @@ def save_Excel(data_file, file_name, sheet_name):
     titel_format = wb.add_format()
     titel_format.set_bold(bold=True)
     titel_format.set_font_size(14)
-    titel_format.set_font_name('冬青黑体简体中文')
+    titel_format.set_font_name(u'冬青黑体简体中文')
     titel_format.set_align('left')
     ws.set_row(0, 22, titel_format)
 
-
-    # 开始写数据到Excel文件中
-    print("开始写数据到Excel表格中...")
-    for i in range(len(data_file)):
-        if i == 0:
-            writeExcel(ws, job=None, row=0)
-        else:
-            writeExcel(ws, data_file[i-1], i)
 
     # 关闭文件流
     wb.close()
