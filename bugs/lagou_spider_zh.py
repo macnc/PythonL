@@ -177,6 +177,8 @@ if __name__ == "__main__":
     print("1. 初始化数据条件数据，需要用户输入...")
     city = input("哪个城市？" )
     title = input("什么职位？ ")
+    total_items = 0
+    pages = 0
     excel_Name = '{0}-{1}相关职位数据原始表.xlsx'.format(city, title)
     sheet_Name = '{0}岗位原始数据'.format(title)
     print_arrow()
@@ -185,6 +187,8 @@ if __name__ == "__main__":
     print("2. 计算网络数据体量、计算分页数...")
     # 用第一页的数据请求来获取数据总量
     total_items, pages = get_pages(city, title, headers)
+    print("职位数据共: {0}条.".format(total_items))
+    print("拉勾网上需要展现的分页数为: {0}页.".format(pages))
     print_arrow()
     sleep(2)
 
